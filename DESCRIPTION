@@ -1,0 +1,14 @@
+Package: bittrex
+Type: Package
+Title: Client for the Bitrex Exchange
+Version: 0.1.0
+Authors@R: c(person("Taylor", "Arnold", person("Michael", "Kane", role = c("aut", "cph", "cre"), email = "kaneplusplus@gmail.com"))
+URL: https://github.com/kaneplusplus/bittrex
+BugReports: https://github.com/kaneplusplus/bittrex/issues
+Description: A client for the Bitrex crypo-currency exchange \url{https://bittrex.com/} including the ability to query trade data, manage account balances, and place orders.
+License: LGPL-2
+Imports: httr, openssl
+Remotes: bwlewis/rthreejs
+Suggests: covr, testthat, knitr, rmarkdown, threejs, tidyverse, igraph, quantmod
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
