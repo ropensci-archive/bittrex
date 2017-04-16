@@ -5,7 +5,7 @@ camel_to_snake = function(x) {
 
 as_data_frame = function(x) {
   ret = as.data.frame(x, stringsAsFactors=FALSE)
-  names(ret) = camel_to_snake(ret)
+  names(ret) = camel_to_snake(names(ret))
   ret
 }
 
@@ -130,6 +130,13 @@ getmarkethistory = function(market, count=20) {
   resp
 }
 
+#' @export
+bittrex_authenticate = function(api_key, secret_key) {
+  Sys.setenv("BITTREX_API_KEY"=api_key)
+  Sys.setenv("BITTREX_SECRET_KEY"=secret_key)
+  invisible(TRUE)
+}
+
 #' @import from httr GET content
 #' @export
 buy = function(market, quantity, type=c("market", "limit"), rate) {
@@ -194,15 +201,15 @@ cancel = function(uuid) {
 getopenorders = function(market) {
   if (missing(market)) {
     req = paste(market_url, 
-      paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY")))
+      paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
   } else {
     req = paste(market_url, 
       paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY"),
-             "&market=", market))
+             "&market=", market), sep="/")
   }
   ret = priv_req(req)
   # TODO: check that this right
-  if (ret$sucess) {
+  if ( (ret$sucess == TRUE) && (length(ret$result) > 0)) {
     ret$result = result_to_df(ret$result)
   }
   ret
@@ -212,11 +219,13 @@ getopenorders = function(market) {
 #' @export
 getbalances = function() {
   req = paste(account_url,
-    paste0("getbalances?apikey=", Sys.getenv("BITTREX_API_KEY")))
+    paste0("getbalances?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
   ret = priv_req(req)
-  # TODO: check that this is right
   if (ret$success) {
-    ret$result = result_to_df(ret$result)
+    if (length(ret$result) == 1)
+      ret$result = as_data_frame(ret$result)
+    else if (length(ret$result) > 1) 
+      ret$result = result_to_df(ret$result)
   }
   ret
 }
