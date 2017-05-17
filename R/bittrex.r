@@ -49,7 +49,7 @@
 #' \item{getbalances: }{account balances for currencies}
 #' \item{getbalance: }{account balance for a specified currency}
 #' \item{getdepositaddress: }{retrieve or generate an address for a specific currency}
-#' \item{getdeposithistory: }{retrieve your deposit historye
+#' \item{getdeposithistory: }{retrieve your deposit history}
 #' \item{getopenorders: }{order data for all open orders}
 #' \item{getorder: }{retrieve a single order by uuid}
 #' \item{getorderhistory: }{recent order history for an account }
@@ -90,6 +90,28 @@ market_url = "https://bittrex.com/api/v1.1/market"
 
 # PUBLIC API
 
+#' @title Available Markets and Other Meta Data
+#' @description The \code{getmarkets} function returns all of the available
+#' markets currently available currently available on the 
+#' Bittrex crypto-currency exchange (\url{https://bittrex.com}) along with
+#' other information including, among other information, when the exchange
+#' was created and the minimum order size.
+#' @references \url{https://bittrex.com/api/v1.1/public/getmarkets}
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{A \code{data.frame} with the market currencies, 
+#'    base currencies, base currency long name, minimum trade size, maket name,
+#'    if the market is active, when the market was created, market notices,
+#'    if the market is sponsored, and the location of the market logo.}
+#' }
+#' @examples
+#' \dontrun{
+#' markets = getmarkets()$result
+#' head(markets)
+#' }
 #' @importFrom httr GET content
 #' @export
 getmarkets = function() {
@@ -99,6 +121,26 @@ getmarkets = function() {
   resp
 }
 
+#' @title Retrieve all Available Currencies on the Exchange
+#' @description The \code{getcurrencies} function returns the available
+#' currencies on the Bittrex crypto-currency exchange 
+#' \url{https://bittrex.com}.
+#' @references \url{https://bittrex.com/api/v1.1/public/getcurrencies}
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{A \code{data.frame} with the currency ticker, 
+#'    currency, a minimum confirmation number, the transaction fee, if the
+#'    currency is active, the coin type, the base address, and currency 
+#'    notices.}
+#' }
+#' @examples
+#' \dontrun{
+#' currencies = getcurrencies()$result
+#' head(markets)
+#' }
 #' @importFrom httr GET content
 #' @export
 getcurrencies = function() {
@@ -200,7 +242,7 @@ bittrex_authenticate = function(api_key, secret_key) {
   invisible(TRUE)
 }
 
-#' @import from httr GET content
+#' @importFrom httr GET content
 #' @export
 buy = function(market, quantity, type=c("market", "limit"), rate) {
   req = market_url
@@ -225,7 +267,7 @@ buy = function(market, quantity, type=c("market", "limit"), rate) {
   priv_req(req)
 }
 
-#' @import from httr GET content
+#' @importFrom httr GET content
 #' @export
 sell = function(market, quantity, type=c("market", "limit"), rate) {
   req = market_url
@@ -250,7 +292,7 @@ sell = function(market, quantity, type=c("market", "limit"), rate) {
   priv_req(req)
 }
 
-#' @import from httr GET content
+#' @importFrom httr GET content
 #' @export
 cancel = function(uuid) {
   req = paste(market_url, 
@@ -259,7 +301,7 @@ cancel = function(uuid) {
   priv_req(req)
 }
 
-#' @import from httr GET content
+#' @importFrom httr GET content
 #' @export
 getopenorders = function(market) {
   if (missing(market)) {
@@ -278,7 +320,7 @@ getopenorders = function(market) {
   ret
 }
 
-#' @import from httr GET content
+#' @importFrom httr GET content
 #' @export
 getbalances = function() {
   req = paste(account_url,
