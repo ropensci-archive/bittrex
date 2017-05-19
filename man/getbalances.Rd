@@ -17,7 +17,7 @@ A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
+                  successful, otherwise and empty string.}
  \item{result:  }{a \code{data.frame} with the currencies, balances, 
    available funds, the amount of any pending transactions, and 
    crypographic addresses that can be used to receive funding.
@@ -28,7 +28,7 @@ A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
+                  successful, otherwise and empty string.}
  \item{result:  }{a \code{data.frame} with the currency, balance, 
    available funds, the amount of any pending transactions, and 
    crypographic addresses that can be used to receive funding.

@@ -11,7 +11,7 @@ A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
+                  successful, otherwise and empty string.}
  \item{result:  }{A \code{data.frame} with the currency ticker, 
    currency, a minimum confirmation number, the transaction fee, if the
    currency is active, the coin type, the base address, and currency 

@@ -17,7 +17,7 @@ A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
+                  successful, otherwise and empty string.}
  \item{result:  }{A code{data.frame} containing recent trade information
    including the order type, time, quantity, price, and fill type.}
 }

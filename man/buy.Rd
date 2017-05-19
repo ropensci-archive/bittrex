@@ -22,9 +22,9 @@ A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
- \item{result:  }{a named list, called "uuid" whose element is an integer
-   identifying the order. This value is used to query the status of
+                  successful, otherwise and empty string.}
+ \item{result:  }{a named list, with element "uuid" whose element is an 
+   integer identifying the order. This value is used to query the status of
    of the order with either the \code{link{getorder}} or 
    \code{link{getopenorders}} function. When the order is fulfilled it
    appears in the order history \code{data.frame} returned by the
