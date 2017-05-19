@@ -4,7 +4,7 @@
 \alias{buy}
 \title{Place a Buy Limit Order}
 \usage{
-buy(market, quantity, type = c("market", "limit"), rate)
+buy(market, quantity, rate, type = c("limit", "market"))
 }
 \arguments{
 \item{market}{the market to place the buy limit order on.}
@@ -13,6 +13,9 @@ buy(market, quantity, type = c("market", "limit"), rate)
 
 \item{rate}{the price you are willing to pay per unit of the 
 transaction currency.}
+
+\item{type}{either "market" or "limit". Note that market orders are currently
+disabled.}
 }
 \value{
 A named list with the following elements:
@@ -33,6 +36,8 @@ A named list with the following elements:
 The \code{buy} function places a buy order onto the 
 Bittrex crypto-currency exchange \url{https://bittrex.com}. This function
 only works after you have set up authentication.
+
+NOTE: market orders are currently disabled.
 }
 \examples{
 \dontrun{
@@ -41,7 +46,7 @@ order = buy("btc-ltc", 1, 0.0001)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/sell}
+\url{https://bittrex.com/api/v1.1/market/buylimit}
 }
 \seealso{
 \code{link{bittrex_authenticate}} \code{\link{sell}}

@@ -364,14 +364,18 @@ bittrex_authenticate = function(api_key, secret_key) {
 #' @description The \code{buy} function places a buy order onto the 
 #' Bittrex crypto-currency exchange \url{https://bittrex.com}. This function
 #' only works after you have set up authentication.
+#'
+#' NOTE: market orders are currently disabled.
 #' @seealso \code{link{bittrex_authenticate}} \code{\link{sell}}
 #' \code{\link{getorder}} \code{\link{getopenorders}} 
 #' \code{\link{getorderhistory}}
-#' @references \url{https://bittrex.com/api/v1.1/account/sell}
+#' @references \url{https://bittrex.com/api/v1.1/market/buylimit}
 #' @param market the market to place the buy limit order on.
 #' @param quantity the quantity of the transaction currency to buy.
 #' @param rate the price you are willing to pay per unit of the 
 #' transaction currency.
+#' @param type either "market" or "limit". Note that market orders are currently
+#' disabled.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -391,7 +395,7 @@ bittrex_authenticate = function(api_key, secret_key) {
 #' order = buy("btc-ltc", 1, 0.0001)
 #' }
 #' @export
-buy = function(market, quantity, type=c("market", "limit"), rate) {
+buy = function(market, quantity, rate, type=c("limit", "market")) {
   req = market_url
   if (type[1] == "market") {
     if (!missing(rate)) {
@@ -418,14 +422,18 @@ buy = function(market, quantity, type=c("market", "limit"), rate) {
 #' @description The \code{sell} function places a buy order onto the 
 #' C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
 #' only works if you have set up authentication. 
+#' 
+#' NOTE: market orders are currently disabled.
 #' @seealso \code{link{bittrex_authenticate}} \code{\link{buy}}
 #' \code{\link{getopenorders}} \code{\link{getorderhistory}}
-#' @references \url{https://bittrex.com/api/v1.1/account/sell}
+#' @references \url{https://bittrex.com/api/v1.1/market/selllimit}
 #' @param market the market to place the buy limit order on.
 #' @param quantity the quantity of the reference currency to sell. 
 #' @param rate the price you would like to get per unit of the 
 #' transaction 
 #' currency.
+#' @param type either "market" or "limit". Note that market orders are currently
+#' disabled.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -445,7 +453,7 @@ buy = function(market, quantity, type=c("market", "limit"), rate) {
 #' order = selllimit("btc-ltc", 1, 0.000001)
 #' }
 #' @export
-sell = function(market, quantity, type=c("market", "limit"), rate) {
+sell = function(market, quantity, rate, type=c("market", "limit")) {
   req = market_url
   if (type[1] == "market") {
     if (!missing(rate)) {
@@ -502,7 +510,7 @@ cancel = function(uuid) {
 #' exchange \url{https://bittrex.com}. This function
 #' can be used after you provide information for authentication.
 #' @seealso \code{\link{bittrex_authenticate}} 
-#' @references \url{https://bittrex.com/api/v1.1/account/getopenorders}
+#' @references \url{https://bittrex.com/api/v1.1/market/getopenorders}
 #' @param market (optional) the market on which you would like to see all 
 #' open orders. If not specified, then all open orders
 #' for all markets are returned.
@@ -532,7 +540,7 @@ getopenorders = function(market) {
   }
   ret = priv_req(req)
   # TODO: check that this right
-  if ( (ret$sucess == TRUE) && (length(ret$result) > 0)) {
+  if ( (ret$success == TRUE) && (length(ret$result) > 0)) {
     ret$result = result_to_df(ret$result)
   }
   ret
@@ -572,3 +580,38 @@ getbalances = function() {
   }
   ret
 }
+
+#' Account Balance for a Specified Currency
+#' @description The \code{getbalance} function retrieves the account balance
+#' for a specified currency on the Bittrex crypto-currency 
+#' exchange \url{https://bittrex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{bittrex_authenticate}}
+#' @references \url{https://bittrex.com/api/v1.1/account/getbalances}
+#' @param currency currency to retrieve the account balance for.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} with the currency, balance, 
+#'    available funds, the amount of any pending transactions, and 
+#'    crypographic addresses that can be used to receive funding.
+#'  }
+#' }
+#' @examples
+#' \dontrun{
+#' balances = getbalance("btc")$result
+#' }
+#' @export
+getbalances = function(currency) {
+  req = paste(account_url,
+    paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
+      "&currency=", currency), sep="/")
+  ret = priv_req(req)
+  if (ret$success) {
+    ret$result = as_data_frame(ret$result)
+  }
+  ret
+}
+

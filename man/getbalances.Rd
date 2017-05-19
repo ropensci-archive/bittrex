@@ -2,9 +2,15 @@
 % Please edit documentation in R/bittrex.r
 \name{getbalances}
 \alias{getbalances}
+\alias{getbalances}
 \title{Account Balances for All Currencies}
 \usage{
-getbalances()
+getbalances(currency)
+
+getbalances(currency)
+}
+\arguments{
+\item{currency}{currency to retrieve the account balance for.}
 }
 \value{
 A named list with the following elements:
@@ -17,10 +23,26 @@ A named list with the following elements:
    crypographic addresses that can be used to receive funding.
  }
 }
+
+A named list with the following elements:
+\itemize{
+ \item{success: }{a boolean indicating if the request successful?}
+ \item{message: }{a string describing the error if the request was not 
+                  successful, otherwise and empty string."}
+ \item{result:  }{a \code{data.frame} with the currency, balance, 
+   available funds, the amount of any pending transactions, and 
+   crypographic addresses that can be used to receive funding.
+ }
+}
 }
 \description{
 The \code{getbalances} function retrieves the account balance
 for all currencies on the Bittrex crypto-currency 
+exchange \url{https://bittrex.com}. This function
+can be used after you provide information for authentication.
+
+The \code{getbalance} function retrieves the account balance
+for a specified currency on the Bittrex crypto-currency 
 exchange \url{https://bittrex.com}. This function
 can be used after you provide information for authentication.
 }
@@ -28,10 +50,17 @@ can be used after you provide information for authentication.
 \dontrun{
 balances = getbalances()$result
 }
+\dontrun{
+balances = getbalance("btc")$result
+}
 }
 \references{
 \url{https://bittrex.com/api/v1.1/account/getbalances}
+
+\url{https://bittrex.com/api/v1.1/account/getbalances}
 }
 \seealso{
+\code{\link{bittrex_authenticate}}
+
 \code{\link{bittrex_authenticate}}
 }

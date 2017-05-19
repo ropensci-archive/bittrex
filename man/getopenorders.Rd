@@ -35,7 +35,7 @@ getopenorders()
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getopenorders}
+\url{https://bittrex.com/api/v1.1/market/getopenorders}
 }
 \seealso{
 \code{\link{bittrex_authenticate}}
