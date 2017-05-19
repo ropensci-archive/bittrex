@@ -4,30 +4,21 @@ context("Bittrex Private Calls")
 # The key does not allow you to create orders, and you can't withdraw.
 # You may deposit :-)
 
-api_key = "9580dcf42e814718bda47186c167edfa"
-secret_key = "106150497a184fa7ba0bc656a0fb4838 "
+api_key = "bunk"
+secret_key = "bunk"
 
-test_that('The "buy" function works.', {
+test_that('The "buy" and "cancel" functions work.', {
   bittrex_authenticate(api_key, secret_key)
-  resp = buy("ltc-btc", 100, 1)
-  expect_false(resp$success)
-  expect_equal(resp$message, 'ACCESS_DENIED')
+  resp = buy("btc-ltc", 100, 0.0001)
+  cancel(resp$result$uuid)
   Sys.sleep(2)
 })
 
-test_that('The "cancel" function works.', {
+test_that('The "sell" and "cancel" function work.', {
   bittrex_authenticate(api_key, secret_key)
   resp = cancel("1234")
   expect_false(resp$success)
   expect_equal(resp$message, 'ACCESS_DENIED')
-  Sys.sleep(2)
-})
-
-test_that('The "getbalance" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getbalance("btc")
-  expect_true(resp$success)
-  expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
@@ -38,6 +29,16 @@ test_that('The "getbalances" function works.', {
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
+
+# START HERE.
+test_that('The "getbalance" function works.', {
+  bittrex_authenticate(api_key, secret_key)
+  resp = getbalance("btc")
+  expect_true(resp$success)
+  expect_is(resp$result, 'data.frame')
+  Sys.sleep(2)
+})
+
 
 test_that('The "getopenorders" function works.', {
   bittrex_authenticate(api_key, secret_key)
