@@ -646,7 +646,12 @@ getdepositaddress = function(currency) {
   ret
 }
 
-#' @references \url{https://bittrex.com/api/v1.1/account/withdraw?apikey=API_KEY&currency=EAC&quantity=20.40&address=EAC_ADDRESS}
+#' @title Withdraw Funds from an Account
+#' @description The \code{withdraw} function moves funds from a 
+#' Bittrex (\url{https://bittrex.com} account to a specified address.
+#' It does not include the transaction fee.
+#' @seealso \code{link{currency}}
+#' @references \url{https://bittrex.com/api/v1.1/account/withdraw}
 #' @param currency the currency to withdraw.
 #' @param quantity the quantity of the currency to withdraw.
 #' @param address where to send the funds.
