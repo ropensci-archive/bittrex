@@ -2,7 +2,7 @@
 % Please edit documentation in R/bittrex.r
 \name{getorderhistory}
 \alias{getorderhistory}
-\title{Recent Order History for an Account}
+\title{Order History for an Account}
 \usage{
 getorderhistory(market)
 }
@@ -28,7 +28,7 @@ A named list with the following elements:
 \description{
 The \code{getorderhistory} function retrieves order history
 data on the Bittrex crypto-currency exchange \url{https://bittrex.com}. This 
-function can be used after you provide information for authentication.
+function can be used after you provide authentication information.
 }
 \examples{
 \dontrun{

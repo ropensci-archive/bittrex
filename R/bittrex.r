@@ -721,10 +721,10 @@ getorder = function(uuid) {
   resp
 }
 
-#' @title Recent Order History for an Account
+#' @title Order History for an Account
 #' @description The \code{getorderhistory} function retrieves order history
 #' data on the Bittrex crypto-currency exchange \url{https://bittrex.com}. This 
-#' function can be used after you provide information for authentication.
+#' function can be used after you provide authentication information.
 #' @seealso \code{\link{bittrex_authenticate}}
 #' @references \url{https://bittrex.com/api/v1.1/account/getorderhistory}
 #' @param market (optional) the market on which you would like to see all 
@@ -768,3 +768,92 @@ getorderhistory = function(market) {
   resp
 }
 
+#' @title Retrieve Withdraw History
+#' @description The \code{getwithdrawhistory} function retrieves the
+#' withdraw history for an account on the Bittrex crypto-currency exchange
+#' \url{https://bittrex.com}. This function can be used after you 
+#' provide authentication information.
+#' @seealso \code{link{bittrex_authenticate}}
+#' @references \url{https://bittrex.com/api/v1.1/account/getwithdrawalhistory?apikey=API_KEY?currency=BTC}
+#' @param currency (optional) the currency to retrieve the withdraw for. If this
+#' is not specified then withdraw history for all currencies is retrieved.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing data about 
+#'    previously completed orders including the order uuid, the currency,
+#'    the time of the withdraw, the quantity, etc.
+#'  }
+#' }
+#' @examples
+#' \dontrun{
+#' getwithdrawhistory()
+#' }
+#' @export
+getwithdrawhistory = function(currency) {
+  req = paste(account_url, paste0("getwithdrawhistory?apikey=",
+    Sys.getenv("BITTREX_API_KEY")), sep="/")
+  if (!missing(currency)) 
+    req = paste0(req, "&currency=", market)
+  resp = priv_req(req)
+  ret = list()
+  if (length(resp$result) > 0) {
+    for(i in 1:length(resp$result)) {
+      for (j in 1:length(resp$result[[i]])) {
+        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
+      }
+    }
+    ret = Reduce(rbind, Map(as_data_frame, resp$result))
+    names(ret) = camel_to_snake(names(ret))
+    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+  }
+  resp$result = ret
+  resp
+}
+
+#' @title Retrieve Deposit History
+#' @description The \code{getdeposithistory} function retrieves the
+#' deposit history for an account on the Bittrex crypto-currency exchange
+#' \url{https://bittrex.com}. This function can be used after you 
+#' provide authentication information.
+#' @seealso \code{link{bittrex_authenticate}}
+#' @references \url{https://bittrex.com/api/v1.1/account/getdeposithistory?apikey=API_KEY?currency=BTC}
+#' @param currency (optional) the currency to retrieve the deposits for. If this
+#' is not specified then deposit history for all currencies is retrieved.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing data about 
+#'    previously completed orders including the order uuid, the currency,
+#'    the time of the withdraw, the quantity, etc.
+#'  }
+#' }
+#' @examples
+#' \dontrun{
+#' getdeposithistory()
+#' }
+#' @export
+getwithdrawhistory = function(currency) {
+  req = paste(account_url, paste0("getdeposithistory?apikey=",
+    Sys.getenv("BITTREX_API_KEY")), sep="/")
+  if (!missing(currency)) 
+    req = paste0(req, "&currency=", market)
+  resp = priv_req(req)
+  ret = list()
+  if (length(resp$result) > 0) {
+    for(i in 1:length(resp$result)) {
+      for (j in 1:length(resp$result[[i]])) {
+        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
+      }
+    }
+    ret = Reduce(rbind, Map(as_data_frame, resp$result))
+    names(ret) = camel_to_snake(names(ret))
+    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+  }
+  resp$result = ret
+  resp
+}
