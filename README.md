@@ -83,4 +83,4 @@ ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type,
   ylab("Price") + scale_colour_discrete(name="Order Type")
 ```
 
-[](inst/README_files/readme-viz.png)
+![](inst/README_files/readme-viz.png)
