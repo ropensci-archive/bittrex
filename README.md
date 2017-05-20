@@ -62,15 +62,6 @@ from CRAN.
 devtools::install_github("kaneplusplus/bittrex")
 ```
 
-```
-## Downloading GitHub repo kaneplusplus/bittrex@master
-## from URL https://api.github.com/repos/kaneplusplus/bittrex/zipball/master
-```
-
-```
-## Installation failed: Not Found (404)
-```
-
 Using the Package
 ---
 
@@ -96,7 +87,5 @@ ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type,
     labels=date_format("%m-%d %H:%M")) + xlab("Date and Time") +
   ylab("Price") + scale_colour_discrete(name="Order Type")
 ```
-
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
 [](inst/README_files/readme-viz.png)
