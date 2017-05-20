@@ -1,8 +1,3 @@
-  ---
-output:
-  github_document:
-    hard_line_breaks: false
----
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 bittrex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.com)
