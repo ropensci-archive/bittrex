@@ -86,4 +86,4 @@ ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type,
   ylab("Price") + scale_colour_discrete(name="Order Type")
 ```
 
-[](inst/README_files/figure-markdown_github-hard_line_breaks/unnamed-chunk-2-1.png)
+[](inst/README_files/readme-viz.png)
