@@ -5,7 +5,7 @@ output:
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-ccex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.com)
+bittrex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.com)
 =====================================================
 
 **Authors:** Michael J. Kane<br/>
