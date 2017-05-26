@@ -1,8 +1,6 @@
 context("Bittrex Private Calls")
 
-# A test account has been created to see if the private calls work.
-# The key does not allow you to create orders, and you can't withdraw.
-# You may deposit :-)
+
 
 api_key = "bunk"
 secret_key = "bunk"
