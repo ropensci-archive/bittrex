@@ -43,7 +43,7 @@ NOTE: market orders are currently disabled.
 \examples{
 \dontrun{
 # Sell one litecoin for 0.000001 bitcoins. 
-order = selllimit("btc-ltc", 1, 0.000001)
+order = sell("btc-ltc", 1, 0.000001)
 }
 }
 \references{

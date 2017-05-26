@@ -23,7 +23,7 @@ The \code{cancel} function cancels an open order on the
 C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
 is called after providing information to authenticate your account and 
 after an order is placed using either 
-the \code{link{buylimit}} or \code{link{selllimit}} functions.
+the \code{link{buy}} or \code{link{sell}} functions.
 }
 \examples{
 \dontrun{

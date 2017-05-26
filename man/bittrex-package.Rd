@@ -44,7 +44,7 @@ Public Function Calls
 Private Function Calls
 \itemize{
 \item{bittrex_authenticate: }{provide user authentication data}
-\item{buylimit: }{place a buy limit order}
+\item{buy: }{place a buy limit order}
 \item{cancel: }{cancel buy or sell order}
 \item{getbalances: }{account balances for currencies}
 \item{getbalance: }{account balance for a specified currency}
@@ -54,7 +54,7 @@ Private Function Calls
 \item{getorder: }{retrieve a single order by uuid}
 \item{getorderhistory: }{recent order history for an account }
 \item{getwithdrawlhistory: }{retrieve your withdrawal history}
-\item{selllimit: }{place a sell limit order}
+\item{sell: }{place a sell limit order}
 \item{withdraw: }{withdraw funds from your account}
 }
 }

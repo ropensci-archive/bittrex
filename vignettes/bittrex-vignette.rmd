@@ -143,33 +143,37 @@ when one Etherium is half the prices of one Bitcoin.
 # Using the Private Interface 
 
 __Diclaimer:__ This software is in no way affiliated, endorsed, or 
-approved by the [C-Cex crypto-currency exchange](https://c-cex.com/) or any of its affiliates. It comes with absolutely no warranty and 
+approved by the [Bittrex crypto-currency exchange](https://bittrex.com/) or any of its affiliates. It comes with absolutely no warranty and 
 should not be used in actual trading unless the user can read and understand the source and know what you are doing.
 
 The private interface allows users to trade in crypto-currencies on the exchange. 
-Private calls require that you [create an account](https://c-cex.com/?id=reg) and create an API and secret key
+Private calls require that you [create an
+account](https://bittrex.com/account/Register) and create an API and secret key
 with appropriate permissions. These keys allow the user to successfully call the following functions:
 
-- ```buylimit```: place a buy limit order
-- ```cancel```: cancel an open order
-- ```ccex_authenticate```: provide user authentication data
+- ```bittrex_authenticate```: provide user authentication data
+- ```buy```: place a buy limit order
+- ```cancel```: cancel buy or sell order
+- ```getbalances```: account balances for currencies
 - ```getbalance```: account balance for a specified currency
-- ```getblanances```: account balances for currencies
+- ```getdepositaddress```: retrieve or generate an address for a specific currency
+- ```getdeposithistory```: retrieve your deposit history
 - ```getopenorders```: order data for all open orders
-- ```getorderdata```: order data for a specified order
+- ```getorder```: retrieve a single order by uuid
 - ```getorderhistory```: recent order history for an account 
-- ```mytrades```: detailed recent trading history for a market
-- ```selllimit```: place a sell limit order
+- ```getwithdrawlhistory```: retrieve your withdrawal history
+- ```sell```: place a sell limit order
+- ```withdraw```: withdraw funds from your account
 
-Private calls retrieve the API and secret key using the CCEX\_API\_KEY
-and CCEX\_SECRET\_KEY environment variables. These may be set by the
+Private calls retrieve the API and secret key using the BITTREX\_API\_KEY
+and BITTREX\_SECRET\_KEY environment variables. These may be set by the
 user before opening the R session or, they can be set using the
-'ccex\_authenticate' function.
+'bittrex\_authenticate' function.
 
-Trades are initiated using either the ```buylimit``` or ```selllimit``` functions. These functions return
+Trades are initiated using either the ```buy``` or ```sell``` functions. These functions return
 a uuid in the ```result``` element that uniquely identifies the order. The order is cancelled using the
 ```order``` function. The order is complete when any of the follwing are true:
 
-1. no result it returned by the ```getorderdata``` function with the corresponding uuid
+1. no result it returned by the ```getorder``` function with the corresponding uuid
 2. the order does not appear in the ```data.frame``` returned by ```getopenorders```
-3. the order appears in the ```data.frame``` returned by ```getorderhistory``` or ```mytrades```.
+3. the order appears in the ```data.frame``` returned by ```getorderhistory``` or ```getorder```.

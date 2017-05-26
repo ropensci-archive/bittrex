@@ -44,7 +44,7 @@
 #' Private Function Calls
 #' \itemize{
 #' \item{bittrex_authenticate: }{provide user authentication data}
-#' \item{buylimit: }{place a buy limit order}
+#' \item{buy: }{place a buy limit order}
 #' \item{cancel: }{cancel buy or sell order}
 #' \item{getbalances: }{account balances for currencies}
 #' \item{getbalance: }{account balance for a specified currency}
@@ -54,7 +54,7 @@
 #' \item{getorder: }{retrieve a single order by uuid}
 #' \item{getorderhistory: }{recent order history for an account }
 #' \item{getwithdrawlhistory: }{retrieve your withdrawal history}
-#' \item{selllimit: }{place a sell limit order}
+#' \item{sell: }{place a sell limit order}
 #' \item{withdraw: }{withdraw funds from your account}
 #' }
 NULL
@@ -454,7 +454,7 @@ buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' @examples
 #' \dontrun{
 #' # Sell one litecoin for 0.000001 bitcoins. 
-#' order = selllimit("btc-ltc", 1, 0.000001)
+#' order = sell("btc-ltc", 1, 0.000001)
 #' }
 #' @export
 sell = function(market, quantity, rate, type=c("market", "limit")) {
@@ -485,7 +485,7 @@ sell = function(market, quantity, rate, type=c("market", "limit")) {
 #' C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
 #' is called after providing information to authenticate your account and 
 #' after an order is placed using either 
-#' the \code{link{buylimit}} or \code{link{selllimit}} functions.
+#' the \code{link{buy}} or \code{link{sell}} functions.
 #' @seealso \code{\link{bittrex_authenticate}} \code{\link{getopenorders}}
 #' @references \url{https://bittrex.com/api/v1.1/account/cancel}
 #' @param uuid the uuid of the order you would like to cancel.
