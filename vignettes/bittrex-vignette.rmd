@@ -1,0 +1,175 @@
+---
+title: "The bittrex Package Vignette"
+author: "Michael J. Kane"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    self_contained: yes
+    toc: true    
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{The ccex Package Vignette}
+-->
+
+# Introduction
+
+Package 'bittrex' is an R implementation of the REST interface used by the
+[Bittrex crypto-currency exchange](https://bittrex.com/). It provides
+functions for endpoints supported by the exchange. This includes the
+ability to retrieve price, volume, and orderbook information as well as
+the ability to trade crypto-currencies.
+
+Calls to the exchange are categorized as either public, which includes
+requests for price, volume, and order book information, and private,
+which includes all requests requiring an account including placing buy
+or sell orders. Public calls can be used directly by installing the
+package. Private calls require that you [create an
+account](https://bittrex.com/account/Register) and create an API and secret key
+with appropriate permissions.
+
+# Installing the Package.
+
+The package is available from GitHub and will be uploaded to CRAN
+shortly. If you wish to install the development version then install the
+[devtools package](https://CRAN.R-project.org/package=devtools), available
+from CRAN.
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
+#install.packages("devtools")
+devtools::install_github("kaneplusplus/bittrex")
+```
+
+# Using the Public Interface
+
+The public interface to the exchange allows you to get market-level
+data including price, volume, and order book information. The following function
+are supported via the public interface:
+
+- ```getcurrencies```:all supported currencies at Bittrex along with other meta data
+- ```getmarkethistory```:the latest trades that have occured for a specified market
+- ```getmarkets```:the open and available trading markets at Bittrex along with other meta data
+- ```getmarketsummaries```:the last 24 hour summary of all active exchanges
+- ```getmarketsummary```:the last 24 hour summary of all active exchanges
+- ```getorderbook```:the orderbook for a given market
+- ```getticker```:the current tick values for a market
+
+Each of these functions returns a named list. The first element, ```success```, is
+a boolean value indicating whether or not the function call was succesful. The
+second element, ```message```, provides an error message if the call was not successful.
+The third element, ```result``` is the result of the function call.
+
+The following sections provide simple examples using the ```bittrex``` package with
+popular visualization and finance packages.
+
+## Visualizing All Trading Pairs
+
+There are currently 261 unique 
+currencies listed on the exchange. However, this does not imply that there are ${261 \choose 2}=33930$ markets. Many of the currencies do not have the volume required for a viable market. To understand
+the structure of the available markets, we can use a graphical model to visualize which currencies
+may be traded. The following code creates the graph and creates an interactive visualization 
+using Bryan Lewis' ```threejs``` library. Note that the result graph supports "spinning" the
+graph as well as "zooming in" on vertices of interest.
+
+```{r, fig.height=6, fig.width=7}
+# Create a function to load libraries quietly.
+shut_up = function(load_lib) {
+  suppressWarnings(suppressPackageStartupMessages(load_lib))
+}
+
+# Load the libraries quietly.
+shut_up(library(bittrex))
+shut_up(library(threejs))
+shut_up(library(tidyverse))
+shut_up(library(igraph))
+
+# Create a graph of the crypo-currency markets.
+currency_graph = getmarkets()$result[,1:2] %>% graph_from_data_frame 
+threejs::graphjs(currency_graph, vertex.size=0.5, vertex.label=V(currency_graph)$name, edge.width=0.25)
+```
+
+The visualization shows that BTC acts as a "hub." Other currencies, like ETC is connected to a few 
+other currencies. Trading between thinly traded currencies are performed by trading through hub currencies only.
+
+## Visualizing Price Data with Quantmod
+
+The public interface also supports the retrieval of traditional currency-market information,
+including price and volume data. The ```getmarkethistory``` extracts the last 
+200 transactions on a specified market. In this example, the price and volume of Bitcoin
+trades in U.S. dollars is turned into an ```xts``` time-series object and visualized 
+using Jeffrey Ryan's ```quantmod``` package.
+
+```{r, fig.height=6, fig.width=7}
+shut_up(library(quantmod))
+
+# Get the recent history of the btc-eth market.
+btc_eth_df = getmarkethistory("btc-eth")$result
+btc_eth = btc_eth_df %>% select(price, quantity) %>% 
+  xts(order.by=btc_eth_df$time_stamp)
+names(btc_eth)[2] = "volume"
+
+# Chart the recent price history.
+chartSeries(btc_eth)
+```
+
+The price of Etherium, in Bitcoins is shown in the top half of the graph. Changes in prices are associated with individuals buying (and selling)
+Etherium at a specified price. The quantity of Etherium bought (and sold) is shown in the bottom half of the graph.
+
+## Visualizing the Order Book with ggplot2
+
+The package also allows users to find orders for a given market. That is, the amount of Etherium an individual would like to buy or sell
+along with the associated price he or she would like. A "buy" order is a request to buy a specified quantity of Etherium at a specified price
+and a sell is a request to sell Etherium with analogous constraints. The difference between the higest buy order and the lowest sell order
+is called the *spread*. The set of buy and sell orders is called the order book. The order book is visualized below using Hadley Wickam's
+```ggplot2``` package.
+
+```{r, fig.height=4, fig.width=7}
+# Create a data.frame frome the "buy" and "sell" orders.
+btc_eth_req = getorderbook("btc-eth")$result
+btc_eth_req$buy$type = "buy"
+btc_eth_req$sell$type = "sell"
+btc_eth = bind_rows(btc_eth_req$buy, btc_eth_req$sell)
+
+# Plot the order book.
+ggplot(btc_eth[btc_eth$rate > 1e-5,], aes(x=rate, y=quantity, group=type, color=type, fill=type)) + 
+  geom_bar(stat="identity") + xlab("Price") +
+  ylab("Order Size") + scale_fill_discrete(name = "Order Type") + 
+  scale_color_discrete(guide=FALSE)
+```
+
+From the price information in the previous section we know that Etherium were being sold for about 0.074 Bitcoins. The order book visualization shows support around this point but also shows a large buy order at a very low price as well as a large sell order
+when one Etherium is half the prices of one Bitcoin.
+
+# Using the Private Interface 
+
+__Diclaimer:__ This software is in no way affiliated, endorsed, or 
+approved by the [C-Cex crypto-currency exchange](https://c-cex.com/) or any of its affiliates. It comes with absolutely no warranty and 
+should not be used in actual trading unless the user can read and understand the source and know what you are doing.
+
+The private interface allows users to trade in crypto-currencies on the exchange. 
+Private calls require that you [create an account](https://c-cex.com/?id=reg) and create an API and secret key
+with appropriate permissions. These keys allow the user to successfully call the following functions:
+
+- ```buylimit```: place a buy limit order
+- ```cancel```: cancel an open order
+- ```ccex_authenticate```: provide user authentication data
+- ```getbalance```: account balance for a specified currency
+- ```getblanances```: account balances for currencies
+- ```getopenorders```: order data for all open orders
+- ```getorderdata```: order data for a specified order
+- ```getorderhistory```: recent order history for an account 
+- ```mytrades```: detailed recent trading history for a market
+- ```selllimit```: place a sell limit order
+
+Private calls retrieve the API and secret key using the CCEX\_API\_KEY
+and CCEX\_SECRET\_KEY environment variables. These may be set by the
+user before opening the R session or, they can be set using the
+'ccex\_authenticate' function.
+
+Trades are initiated using either the ```buylimit``` or ```selllimit``` functions. These functions return
+a uuid in the ```result``` element that uniquely identifies the order. The order is cancelled using the
+```order``` function. The order is complete when any of the follwing are true:
+
+1. no result it returned by the ```getorderdata``` function with the corresponding uuid
+2. the order does not appear in the ```data.frame``` returned by ```getopenorders```
+3. the order appears in the ```data.frame``` returned by ```getorderhistory``` or ```mytrades```.

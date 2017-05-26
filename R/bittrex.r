@@ -329,8 +329,12 @@ getmarkethistory = function(market) {
     paste0("getmarkethistory?market=", market), sep="/")),
     type="application/json")
   if (resp$succes) {
-    resp$result = result_to_df(resp$result)
-    resp$result$time_stamp = timestamp_to_posix(resp$result$time_stamp)
+    if (length(resp$result) > 0) {
+      resp$result = result_to_df(resp$result)
+      resp$result$time_stamp = timestamp_to_posix(resp$result$time_stamp)
+    } else {
+      resp$result = NULL
+    }
   }
   resp
 }
