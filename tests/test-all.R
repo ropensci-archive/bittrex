@@ -1,4 +1,4 @@
 library('testthat')
-library('ccex')
+library('bittrex')
 
-test_check('ccex')
+test_check('bittrex')

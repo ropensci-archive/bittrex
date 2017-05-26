@@ -9,7 +9,7 @@ output:
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{The ccex Package Vignette}
+%\VignetteIndexEntry{The bittrex Package Vignette}
 -->
 
 # Introduction
