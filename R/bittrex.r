@@ -801,7 +801,7 @@ getwithdrawhistory = function(currency) {
   req = paste(account_url, paste0("getwithdrawhistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
   if (!missing(currency)) 
-    req = paste0(req, "&currency=", market)
+    req = paste0(req, "&currency=", currency)
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
@@ -842,11 +842,11 @@ getwithdrawhistory = function(currency) {
 #' getdeposithistory()
 #' }
 #' @export
-getwithdrawhistory = function(currency) {
+getdeposithistory = function(currency) {
   req = paste(account_url, paste0("getdeposithistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
   if (!missing(currency)) 
-    req = paste0(req, "&currency=", market)
+    req = paste0(req, "&currency=", currency)
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
