@@ -6,6 +6,9 @@
 \usage{
 getticker(market)
 }
+\arguments{
+\item{market}{the market to get the ticker for.}
+}
 \value{
 A named list with the following elements:
 \itemize{

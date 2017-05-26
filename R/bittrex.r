@@ -155,6 +155,7 @@ getcurrencies = function() {
 #' transaction price for a specified market on the Bittrex crypto-currency 
 #' exchange (\url{https://bittrex.com}).
 #' @references \url{https://bittrex.com/api/v1.1/public/getticker}
+#' @param market the market to get the ticker for.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -221,6 +222,7 @@ getmarketsummaries = function() {
 #' markets on the Bittrex crypto-currency 
 #' exchange (\url{https://bittrex.com}).
 #' @references \url{https://bittrex.com/api/v1.1/public/getmarketsummary}
+#' @param market the market to retrieve the summary for.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -237,7 +239,7 @@ getmarketsummaries = function() {
 #' }
 #' @examples
 #' \dontrun{
-#' ms = getmarketsummaries()$result
+#' ms = getmarketsummary("btc-eth")$result
 #' head(ms)
 #' }
 #' @importFrom httr GET content
@@ -307,7 +309,6 @@ getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
 #' (\url{https://bittrex.com}).
 #' @references \url{https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DOGE}
 #' @param market the market from which history data will be retrieved.
-#' @param count the number of recent trades to retrieve (default is 50, max
 #' is 100).
 #' @return A named list with the following elements:
 #' \itemize{

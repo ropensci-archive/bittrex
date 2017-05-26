@@ -6,6 +6,9 @@
 \usage{
 getmarketsummary(market)
 }
+\arguments{
+\item{market}{the market to retrieve the summary for.}
+}
 \value{
 A named list with the following elements:
 \itemize{
@@ -29,7 +32,7 @@ exchange (\url{https://bittrex.com}).
 }
 \examples{
 \dontrun{
-ms = getmarketsummaries()$result
+ms = getmarketsummary("btc-eth")$result
 head(ms)
 }
 }

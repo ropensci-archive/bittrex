@@ -7,9 +7,7 @@
 getmarkethistory(market)
 }
 \arguments{
-\item{market}{the market from which history data will be retrieved.}
-
-\item{count}{the number of recent trades to retrieve (default is 50, max
+\item{market}{the market from which history data will be retrieved.
 is 100).}
 }
 \value{
