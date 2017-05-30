@@ -608,7 +608,7 @@ getbalances = function() {
 #' balances = getbalance("btc")$result
 #' }
 #' @export
-getbalances = function(currency) {
+getbalance = function(currency) {
   req = paste(account_url,
     paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
       "&currency=", currency), sep="/")

@@ -3,6 +3,7 @@
 export(bittrex_authenticate)
 export(buy)
 export(cancel)
+export(getbalance)
 export(getbalances)
 export(getcurrencies)
 export(getdepositaddress)
