@@ -54,10 +54,16 @@ test_that('The "getorderbook" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getmarkethistory" function works.', {
+test_that('The "getmarkethistory" function works with a market.', {
   resp = getmarkethistory("btc-ltc")
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
+  Sys.sleep(2)
+})
+
+test_that('The "getmarkethistory" function works without a valid market', {
+  resp = getmarkethistory("usd-ltc")
+  expect_false(resp$success)
   Sys.sleep(2)
 })
 

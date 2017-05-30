@@ -22,6 +22,12 @@ test_that('The "buy" and "cancel" functions works.', {
   Sys.sleep(2)
 })
 
+test_that('The "buy" functions errors with invalid type.', {
+  bittrex_authenticate(api_key, secret_key)
+  expect_error(buy("btc-ltc", 100, 0.0001, type="bunk"))
+  Sys.sleep(2)
+})
+
 test_that('The "cancel" function work.', {
   bittrex_authenticate(api_key, secret_key)
   resp = cancel("1234")
@@ -153,6 +159,13 @@ test_that('The "getopenorders" function works.', {
   Sys.sleep(2)
 })
 
+test_that('The "getopenorders" function works for a market.', {
+  bittrex_authenticate(api_key, secret_key)
+  resp = getopenorders('btc-ltc')
+  expect_false(resp$success)
+  Sys.sleep(2)
+})
+
 test_that('The "sell" function works.', {
   bittrex_authenticate(api_key, secret_key)
   resp = sell("btc-ltc", 1, 1e6)
@@ -163,6 +176,12 @@ test_that('The "sell" function works.', {
   } else {
     expect_equal(resp$message, 'ACCESS_DENIED')
   }
+  Sys.sleep(2)
+})
+
+test_that('The "sell" function error with invalid type.', {
+  bittrex_authenticate(api_key, secret_key)
+  expect_error(sell("btc-ltc", 1, 1e6, type="bunk"))
   Sys.sleep(2)
 })
 
