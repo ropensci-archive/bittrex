@@ -712,7 +712,7 @@ withdraw = function(currency, quantity, address, paymentid) {
 getorder = function(uuid) {
   req = paste(account_url, paste0("getorder?apikey=", 
     Sys.getenv("BITTREX_API_KEY"), "&uuid=", uuid), sep="/")
-  p = priv_req(req)
+  resp = priv_req(req)
   ret = NULL
   if (length(resp$result) > 0) {
     for(i in 1:length(resp$result)) {
