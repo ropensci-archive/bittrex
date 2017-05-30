@@ -8,7 +8,7 @@ bittrex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.
 
 [![Build Status](https://travis-ci.org/kaneplusplus/bittrex.svg?branch=master)](https://travis-ci.org/kaneplusplus/bittrex)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kaneplusplus/bittrex?branch=master&svg=true)](https://ci.appveyor.com/project/kaneplusplus/bittrex)
-[![Coverage Status](https://img.shields.io/codecov/c/github/kaneplusplus/bittrex/master.svg)](https://codecov.io/github/kaneplusplus/bittrex?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/kaneplusplus/bittrex/badge.svg?branch=master)](https://coveralls.io/github/kaneplusplus/bittrex?branch=master)
 
 Disclaimer
 ===
