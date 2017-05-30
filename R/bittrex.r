@@ -48,7 +48,8 @@
 #' \item{cancel: }{cancel buy or sell order}
 #' \item{getbalances: }{account balances for currencies}
 #' \item{getbalance: }{account balance for a specified currency}
-#' \item{getdepositaddress: }{retrieve or generate an address for a specific currency}
+#' \item{getdepositaddress: }{retrieve or generate an address for a specified 
+#'  currency}
 #' \item{getdeposithistory: }{retrieve your deposit history}
 #' \item{getopenorders: }{order data for all open orders}
 #' \item{getorder: }{retrieve a single order by uuid}
@@ -675,7 +676,7 @@ getdepositaddress = function(currency) {
 #' widthdraw("btc", 10, "1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2")
 #' }
 #' @export
-widthdraw = function(currency, quantity, address, paymentid) {
+withdraw = function(currency, quantity, address, paymentid) {
   req = paste(account_url, 
     paste0("withdraw?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency, "&quantity=", quantity, "&address=", address),
@@ -767,14 +768,14 @@ getorderhistory = function(market) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT")
   }
   resp$result = ret
   resp
 }
 
-#' @title Retrieve Withdraw History
-#' @description The \code{getwithdrawhistory} function retrieves the
+#' @title Retrieve Withdrawal History
+#' @description The \code{getwithdrawalhistory} function retrieves the
 #' withdraw history for an account on the Bittrex crypto-currency exchange
 #' \url{https://bittrex.com}. This function can be used after you 
 #' provide authentication information.
@@ -794,11 +795,11 @@ getorderhistory = function(market) {
 #' }
 #' @examples
 #' \dontrun{
-#' getwithdrawhistory()
+#' getwithdrawalhistory()
 #' }
 #' @export
-getwithdrawhistory = function(currency) {
-  req = paste(account_url, paste0("getwithdrawhistory?apikey=",
+getwithdrawalhistory = function(currency) {
+  req = paste(account_url, paste0("getwithdrawalhistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
   if (!missing(currency)) 
     req = paste0(req, "&currency=", currency)
@@ -812,7 +813,7 @@ getwithdrawhistory = function(currency) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT")
   }
   resp$result = ret
   resp
@@ -857,7 +858,7 @@ getdeposithistory = function(currency) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+    ret$last_updated = strptime(ret$last_updated, "%Y-%m-%dT%H:%M:%OS",tz="GMT")
   }
   resp$result = ret
   resp

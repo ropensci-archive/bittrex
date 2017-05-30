@@ -48,7 +48,8 @@ Private Function Calls
 \item{cancel: }{cancel buy or sell order}
 \item{getbalances: }{account balances for currencies}
 \item{getbalance: }{account balance for a specified currency}
-\item{getdepositaddress: }{retrieve or generate an address for a specific currency}
+\item{getdepositaddress: }{retrieve or generate an address for a specified 
+ currency}
 \item{getdeposithistory: }{retrieve your deposit history}
 \item{getopenorders: }{order data for all open orders}
 \item{getorder: }{retrieve a single order by uuid}
