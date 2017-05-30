@@ -438,8 +438,8 @@ buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' @param rate the price you would like to get per unit of the 
 #' transaction 
 #' currency.
-#' @param type either "market" or "limit". Note that market orders are currently
-#' disabled.
+#' @param type either "market" or "limit". Note that market orders are 
+#' discouraged. (default is limit)
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -459,7 +459,7 @@ buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' order = sell("btc-ltc", 1, 0.000001)
 #' }
 #' @export
-sell = function(market, quantity, rate, type=c("market", "limit")) {
+sell = function(market, quantity, rate, type=c("limit", "market")) {
   req = market_url
   if (type[1] == "market") {
     if (!missing(rate)) {

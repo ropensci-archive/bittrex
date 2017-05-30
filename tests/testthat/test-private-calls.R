@@ -101,7 +101,7 @@ test_that('The "withdraw" function works.', {
 test_that('The "getorder" function works.', {
   bittrex_authenticate(api_key, secret_key)
   resp = getorder("1234")
-  expect_true(resp$success)
+  expect_false(resp$success)
   Sys.sleep(2)
 })
 
