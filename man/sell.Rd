@@ -4,7 +4,7 @@
 \alias{sell}
 \title{Place a Sell Limit Order}
 \usage{
-sell(market, quantity, rate, type = c("market", "limit"))
+sell(market, quantity, rate, type = c("limit", "market"))
 }
 \arguments{
 \item{market}{the market to place the buy limit order on.}
@@ -15,8 +15,8 @@ sell(market, quantity, rate, type = c("market", "limit"))
 transaction 
 currency.}
 
-\item{type}{either "market" or "limit". Note that market orders are currently
-disabled.}
+\item{type}{either "market" or "limit". Note that market orders are 
+discouraged. (default is limit)}
 }
 \value{
 A named list with the following elements:
