@@ -4,10 +4,8 @@ language: R
 sudo: false
 cache: packages
 r_packages:
+  - covr
   - testthat
-r_github_packages:
-  - jimhester/covr
-  - bwlewis/rthreejs
 after_success:
   - Rscript -e 'covr::coveralls()'
 
