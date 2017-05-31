@@ -6,6 +6,8 @@ cache: packages
 r_packages:
   - covr
   - testthat
+r_github_packages:
+  - bwlewis/rthreejs
 after_success:
-  - Rscript -e 'covr::coveralls()'
+  - Rscript -e 'covr::codecov()'
 
