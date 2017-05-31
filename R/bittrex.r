@@ -71,8 +71,8 @@ as_data_frame = function(x) {
 }
 
 result_to_df= function(result) {
-  for(i in 1:length(result)) {
-    for (j in 1:length(result[[i]]))
+  for(i in seq_along(result)) {
+    for (j in seq_along(result[[i]]))
       if (is.null(result[[i]][[j]]))
         result[[i]][[j]] = NA
   }
@@ -715,8 +715,8 @@ getorder = function(uuid) {
   resp = priv_req(req)
   ret = NULL
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
@@ -761,8 +761,8 @@ getorderhistory = function(market) {
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
@@ -806,8 +806,8 @@ getwithdrawalhistory = function(currency) {
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
@@ -851,8 +851,8 @@ getdeposithistory = function(currency) {
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
