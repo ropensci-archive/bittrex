@@ -9,5 +9,5 @@ r_github_packages:
   - jimhester/covr
   - bwlewis/rthreejs
 after_success:
-  - Rscript -e 'covr::coveralls()'
+  - Rscript -e 'covr::codecov()'
 
