@@ -62,7 +62,7 @@ test_that('The "getmarkethistory" function works with a market.', {
 })
 
 test_that('The "getmarkethistory" function works without a valid market', {
-  resp = getmarkethistory("usd-ltc")
+  resp = getmarkethistory("bunk")
   expect_false(resp$success)
   Sys.sleep(2)
 })
