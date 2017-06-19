@@ -218,6 +218,30 @@ getmarketsummaries = function() {
   resp
 }
 
+#' @title Check the Connection to the Bittrex Exchange
+#' @description The \code{bittrex_api_check} function checks to see
+#' if you can sucessfully connect to the 
+#' Bittrex crypto-currency exchange 
+#' \url{https://bittrex.com}. 
+#' @param warn if the request is not successful, should a warning be provided
+#' with the status code.
+#' @return A named logical indicating if you can connect to the exchange
+#' through the public interface.
+#' @examples
+#' \dontrun{
+#' bittrex_api_check()
+#' }
+#' @importFrom httr GET status_code
+#' @export
+bittrex_api_check = function(warn=TRUE) {
+  resp = GET(paste(public_url, "getmarketsummaries", sep="/"))
+  if (status_code(resp) != 200) {
+    if (warn) warning(paste("Status code:", status_code(resp)))
+  } else {
+    TRUE
+  }
+}
+
 #' @title Summary of a Markets
 #' @description the \code{getmarketsummary} retrieves a summary for a specified
 #' markets on the Bittrex crypto-currency 
@@ -863,3 +887,4 @@ getdeposithistory = function(currency) {
   resp$result = ret
   resp
 }
+

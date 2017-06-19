@@ -84,3 +84,13 @@ ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type,
 ```
 
 ![](inst/README_files/readme-viz.png)
+
+Contributing
+---
+
+If you would like to contribute to the project please contact
+the maintainer directly. Please note that this project is
+released with a [Contributor Code of Conduct](CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
+

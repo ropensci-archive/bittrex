@@ -9,6 +9,12 @@ test_that('The "getmarkets" function works.', {
   Sys.sleep(2)
 })
 
+test_that('The "bittrex_api_check" function works.', {
+  resp = bittrex_api_check()
+  expect_is(resp, "logical")[
+  Sys.sleep(2)
+})
+
 test_that('The "getmarketsummaries" function works.', {
   resp = getmarketsummaries()
   expect_true(resp$success)
