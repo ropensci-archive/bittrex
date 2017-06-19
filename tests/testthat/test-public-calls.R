@@ -11,7 +11,7 @@ test_that('The "getmarkets" function works.', {
 
 test_that('The "bittrex_api_check" function works.', {
   resp = bittrex_api_check()
-  expect_is(resp, "logical")[
+  expect_is(resp, "logical")
   Sys.sleep(2)
 })
 
