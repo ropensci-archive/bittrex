@@ -3,34 +3,34 @@ context("Bittrex Private Calls")
 api_key = "bunk"
 secret_key = "bunk"
 
-test_that('The "bittrex_authenticate" function works.', {
-  expect_true(bittrex_authenticate(api_key, secret_key))
+test_that('The "bt_authenticate" function works.', {
+  expect_true(bt_authenticate(api_key, secret_key))
   expect_equal(Sys.getenv("BITTREX_API_KEY"), api_key)
   expect_equal(Sys.getenv("BITTREX_SECRET_KEY"), secret_key)
 })
 
-test_that('The "buy" and "cancel" functions works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = buy("btc-ltc", 100, 0.0001)
+test_that('The "bt_buy" and "bt_cancel" functions work.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_buy("btc-ltc", 100, 0.0001)
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
     expect_equal(resp$message, "APIKEY_INVALID")
   } else {
-    cancel(resp$result$uuid)
+    bt_cancel(resp$result$uuid)
     expect_equal(resp$success, TRUE)
   }
   Sys.sleep(2)
 })
 
-test_that('The "buy" functions errors with invalid type.', {
-  bittrex_authenticate(api_key, secret_key)
-  expect_error(buy("btc-ltc", 100, 0.0001, type="bunk"))
+test_that('The "bt_buy" functions errors with invalid type.', {
+  bt_authenticate(api_key, secret_key)
+  expect_error(bt_buy("btc-ltc", 100, 0.0001, type="bunk"))
   Sys.sleep(2)
 })
 
-test_that('The "cancel" function work.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = cancel("1234")
+test_that('The "bt_cancel" function work.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_cancel("1234")
   expect_false(resp$success)
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_equal(resp$message, 'APIKEY_INVALID') 
@@ -40,9 +40,9 @@ test_that('The "cancel" function work.', {
   Sys.sleep(2)
 })
 
-test_that('The "getbalances" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getbalances()
+test_that('The "bt_getbalances" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getbalances()
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -53,9 +53,9 @@ test_that('The "getbalances" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getbalance" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getbalance("btc")
+test_that('The "bt_getbalance" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getbalance("btc")
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -66,9 +66,9 @@ test_that('The "getbalance" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getdepositaddress" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getdepositaddress("btc")
+test_that('The "bt_getdepositaddress" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getdepositaddress("btc")
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -79,9 +79,9 @@ test_that('The "getdepositaddress" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getdeposithistory" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getdeposithistory("btc")
+test_that('The "bt_getdeposithistory" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getdeposithistory("btc")
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -92,9 +92,9 @@ test_that('The "getdeposithistory" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "withdraw" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = withdraw("some-currency-that-does-not-exist", 1, 1)
+test_that('The "bt_withdraw" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_withdraw("some-currency-that-does-not-exist", 1, 1)
   expect_false(resp$success)
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -104,16 +104,16 @@ test_that('The "withdraw" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getorder" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getorder("1234")
+test_that('The "bt_getorder" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getorder("1234")
   expect_false(resp$success)
   Sys.sleep(2)
 })
 
 test_that('The "getorderhistory" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getorderhistory()
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getorderhistory()
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -123,9 +123,9 @@ test_that('The "getorderhistory" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getwithdrawalhistory" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getwithdrawalhistory()
+test_that('The "bt_getwithdrawalhistory" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getwithdrawalhistory()
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -135,9 +135,9 @@ test_that('The "getwithdrawalhistory" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getwithdrawalhistory" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getwithdrawalhistory()
+test_that('The "bt_getwithdrawalhistory" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getwithdrawalhistory()
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -147,9 +147,9 @@ test_that('The "getwithdrawalhistory" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getopenorders" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getopenorders()
+test_that('The "bt_getopenorders" function works.', {
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getopenorders()
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
     expect_equal(resp$message, "APIKEY_INVALID")
@@ -160,15 +160,15 @@ test_that('The "getopenorders" function works.', {
 })
 
 test_that('The "getopenorders" function works for a market.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = getopenorders('btc-ltc')
+  bt_authenticate(api_key, secret_key)
+  resp = bt_getopenorders('btc-ltc')
   expect_false(resp$success)
   Sys.sleep(2)
 })
 
 test_that('The "sell" function works.', {
-  bittrex_authenticate(api_key, secret_key)
-  resp = sell("btc-ltc", 1, 1e6)
+  bt_authenticate(api_key, secret_key)
+  resp = bt_sell("btc-ltc", 1, 1e6)
   expect_false(resp$success)
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
@@ -180,8 +180,8 @@ test_that('The "sell" function works.', {
 })
 
 test_that('The "sell" function error with invalid type.', {
-  bittrex_authenticate(api_key, secret_key)
-  expect_error(sell("btc-ltc", 1, 1e6, type="bunk"))
+  bt_authenticate(api_key, secret_key)
+  expect_error(bt_sell("btc-ltc", 1, 1e6, type="bunk"))
   Sys.sleep(2)
 })
 

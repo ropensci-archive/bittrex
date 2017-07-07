@@ -2,56 +2,56 @@ library(testthat)
 
 context('Bittrex Public Calls')
 
-test_that('The "getmarkets" function works.', {
-  resp = getmarkets()
+test_that('The "bt_getmarkets" function works.', {
+  resp = bt_getmarkets()
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "bittrex_api_check" function works.', {
-  resp = bittrex_api_check()
+test_that('The "bt_api_check" function works.', {
+  resp = bt_api_check()
   expect_is(resp, "logical")
   Sys.sleep(2)
 })
 
-test_that('The "getmarketsummaries" function works.', {
-  resp = getmarketsummaries()
+test_that('The "bt_getmarketsummaries" function works.', {
+  resp = bt_getmarketsummaries()
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getcurrencies" function works.', {
-  resp = getcurrencies()
+test_that('The "bt_getcurrencies" function works.', {
+  resp = bt_getcurrencies()
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getticker" function works.', {
-  resp = getticker("btc-ltc")
+test_that('The "bt_getticker" function works.', {
+  resp = bt_getticker("btc-ltc")
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getmarketsummaries" function works.', {
-  resp = getmarketsummaries()
+test_that('The "bt_getmarketsummaries" function works.', {
+  resp = bt_getmarketsummaries()
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getmarketsummary" function works.', {
-  resp = getmarketsummary("btc-ltc")
+test_that('The "bt_getmarketsummary" function works.', {
+  resp = bt_getmarketsummary("btc-ltc")
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getorderbook" function works.', {
-  resp = getorderbook("btc-ltc")
+test_that('The "bt_getorderbook" function works.', {
+  resp = bt_getorderbook("btc-ltc")
   expect_true(resp$success)
   expect_is(resp$result, 'list')
   expect_equal(names(resp$result), c("buy", "sell"))
@@ -60,15 +60,15 @@ test_that('The "getorderbook" function works.', {
   Sys.sleep(2)
 })
 
-test_that('The "getmarkethistory" function works with a market.', {
-  resp = getmarkethistory("btc-ltc")
+test_that('The "bt_getmarkethistory" function works with a market.', {
+  resp = bt_getmarkethistory("btc-ltc")
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 
-test_that('The "getmarkethistory" function works without a valid market', {
-  resp = getmarkethistory("bunk")
+test_that('The "bt_getmarkethistory" function works without a valid market', {
+  resp = bt_getmarkethistory("bunk")
   expect_false(resp$success)
   Sys.sleep(2)
 })

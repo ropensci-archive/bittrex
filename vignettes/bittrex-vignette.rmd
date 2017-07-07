@@ -46,13 +46,13 @@ The public interface to the exchange allows you to get market-level
 data including price, volume, and order book information. The following function
 are supported via the public interface:
 
-- ```getcurrencies```:all supported currencies at Bittrex along with other meta data
-- ```getmarkethistory```:the latest trades that have occured for a specified market
-- ```getmarkets```:the open and available trading markets at Bittrex along with other meta data
-- ```getmarketsummaries```:the last 24 hour summary of all active exchanges
-- ```getmarketsummary```:the last 24 hour summary of all active exchanges
-- ```getorderbook```:the orderbook for a given market
-- ```getticker```:the current tick values for a market
+- ```bt_getcurrencies```:all supported currencies at Bittrex along with other meta data
+- ```bt_getmarkethistory```:the latest trades that have occured for a specified market
+- ```bt_getmarkets```:the open and available trading markets at Bittrex along with other meta data
+- ```bt_getmarketsummaries```:the last 24 hour summary of all active exchanges
+- ```bt_getmarketsummary```:the last 24 hour summary of all active exchanges
+- ```bt_getorderbook```:the orderbook for a given market
+- ```bt_getticker```:the current tick values for a market
 
 Each of these functions returns a named list. The first element, ```success```, is
 a boolean value indicating whether or not the function call was succesful. The
@@ -84,7 +84,7 @@ shut_up(library(tidyverse))
 shut_up(library(igraph))
 
 # Create a graph of the crypo-currency markets.
-currency_graph = getmarkets()$result[,1:2] %>% graph_from_data_frame 
+currency_graph = bt_getmarkets()$result[,1:2] %>% graph_from_data_frame 
 threejs::graphjs(currency_graph, vertex.size=0.5, vertex.label=V(currency_graph)$name, edge.width=0.25)
 ```
 
@@ -94,7 +94,7 @@ other currencies. Trading between thinly traded currencies are performed by trad
 ## Visualizing Price Data with Quantmod
 
 The public interface also supports the retrieval of traditional currency-market information,
-including price and volume data. The ```getmarkethistory``` extracts the last 
+including price and volume data. The ```bt_getmarkethistory``` extracts the last 
 200 transactions on a specified market. In this example, the price and volume of Bitcoin
 trades in U.S. dollars is turned into an ```xts``` time-series object and visualized 
 using Jeffrey Ryan's ```quantmod``` package.
@@ -103,7 +103,7 @@ using Jeffrey Ryan's ```quantmod``` package.
 shut_up(library(quantmod))
 
 # Get the recent history of the btc-eth market.
-btc_eth_df = getmarkethistory("btc-eth")$result
+btc_eth_df = bt_getmarkethistory("btc-eth")$result
 btc_eth = btc_eth_df %>% select(price, quantity) %>% 
   xts(order.by=btc_eth_df$time_stamp)
 names(btc_eth)[2] = "volume"
@@ -125,7 +125,7 @@ is called the *spread*. The set of buy and sell orders is called the order book.
 
 ```{r, fig.height=4, fig.width=7}
 # Create a data.frame frome the "buy" and "sell" orders.
-btc_eth_req = getorderbook("btc-eth")$result
+btc_eth_req = bt_getorderbook("btc-eth")$result
 btc_eth_req$buy$type = "buy"
 btc_eth_req$sell$type = "sell"
 btc_eth = bind_rows(btc_eth_req$buy, btc_eth_req$sell)
@@ -151,29 +151,29 @@ Private calls require that you [create an
 account](https://bittrex.com/account/Register) and create an API and secret key
 with appropriate permissions. These keys allow the user to successfully call the following functions:
 
-- ```bittrex_authenticate```: provide user authentication data
-- ```buy```: place a buy limit order
-- ```cancel```: cancel buy or sell order
-- ```getbalances```: account balances for currencies
-- ```getbalance```: account balance for a specified currency
-- ```getdepositaddress```: retrieve or generate an address for a specific currency
-- ```getdeposithistory```: retrieve your deposit history
-- ```getopenorders```: order data for all open orders
-- ```getorder```: retrieve a single order by uuid
-- ```getorderhistory```: recent order history for an account 
-- ```getwithdrawlhistory```: retrieve your withdrawal history
-- ```sell```: place a sell limit order
-- ```withdraw```: withdraw funds from your account
+- ```bt_authenticate```: provide user authentication data
+- ```bt_buy```: place a buy limit order
+- ```bt_cancel```: cancel buy or sell order
+- ```bt_getbalances```: account balances for currencies
+- ```bt_getbalance```: account balance for a specified currency
+- ```bt_getdepositaddress```: retrieve or generate an address for a specific currency
+- ```bt_getdeposithistory```: retrieve your deposit history
+- ```bt_getopenorders```: order data for all open orders
+- ```bt_getorder```: retrieve a single order by uuid
+- ```bt_getorderhistory```: recent order history for an account 
+- ```bt_getwithdrawlhistory```: retrieve your withdrawal history
+- ```bt_sell```: place a sell limit order
+- ```bt_withdraw```: withdraw funds from your account
 
 Private calls retrieve the API and secret key using the BITTREX\_API\_KEY
 and BITTREX\_SECRET\_KEY environment variables. These may be set by the
 user before opening the R session or, they can be set using the
 'bittrex\_authenticate' function.
 
-Trades are initiated using either the ```buy``` or ```sell``` functions. These functions return
+Trades are initiated using either the ```bt_buy``` or ```bt_sell``` functions. These functions return
 a uuid in the ```result``` element that uniquely identifies the order. The order is cancelled using the
 ```order``` function. The order is complete when any of the follwing are true:
 
-1. no result it returned by the ```getorder``` function with the corresponding uuid
-2. the order does not appear in the ```data.frame``` returned by ```getopenorders```
-3. the order appears in the ```data.frame``` returned by ```getorderhistory``` or ```getorder```.
+1. no result is returned by the ```bt_getorder``` function with the corresponding uuid
+2. the order does not appear in the ```data.frame``` returned by ```bt_getopenorders```
+3. the order appears in the ```data.frame``` returned by ```bt_getorderhistory``` or ```bt_getorder```.
