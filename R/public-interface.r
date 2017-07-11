@@ -248,7 +248,6 @@ bt_getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
 #' (\url{https://bittrex.com}).
 #' @references \url{https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DOGE}
 #' @param market the market from which history data will be retrieved.
-#' is 100).
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
