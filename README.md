@@ -71,10 +71,7 @@ library(scales)
 library(ggplot2)
 
 # The price of doge coins in bitcoins.
-doge_btc = getmarkethistory(market='btc-doge')$result
-
-# ggplot2 handle POSIXct types only.
-doge_btc$time_stamp = as.POSIXct(doge_btc$time_stamp)
+doge_btc = bt_getmarkethistory(market='btc-doge')$result
 
 ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type, 
   color=order_type)) + geom_line() + 
