@@ -349,7 +349,8 @@ bt_getbalance = function(currency) {
   resp = priv_req(req)
   if (resp$success && is.null(resp$result$Balance)) {
     for (i in seq_along(resp$result)) {
-      if (is.null(resp$result[[i]])) resp$result[[i]] = NA
+      if (is.null(resp$result[[i]])) resp$result[[i]] = 0
+      resp$result$CryptoAddress = NA
     }
   }
   if (resp$success) {
