@@ -22,7 +22,8 @@ A named list with the following elements:
 \description{
 The \code{bt_getticker} function returns the bid, ask, and last
 transaction price for a specified market on the Bittrex crypto-currency 
-exchange (\url{https://bittrex.com}).
+exchange (\url{https://bittrex.com}). The complete list of 
+markets is available via the \code{\link{bt_getmarkets}} function.
 }
 \examples{
 \dontrun{
@@ -32,4 +33,7 @@ head(markets)
 }
 \references{
 \url{https://bittrex.com/api/v1.1/public/getticker}
+}
+\seealso{
+\code{\link{bt_getmarkets}}
 }

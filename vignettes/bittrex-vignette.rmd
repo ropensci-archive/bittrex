@@ -125,10 +125,7 @@ is called the *spread*. The set of buy and sell orders is called the order book.
 
 ```{r, fig.height=4, fig.width=7}
 # Create a data.frame frome the "buy" and "sell" orders.
-btc_eth_req = bt_getorderbook("btc-eth")$result
-btc_eth_req$buy$type = "buy"
-btc_eth_req$sell$type = "sell"
-btc_eth = bind_rows(btc_eth_req$buy, btc_eth_req$sell)
+btc_eth = bt_getorderbook("btc-eth")$result
 
 # Plot the order book.
 ggplot(btc_eth[btc_eth$rate > 1e-5,], aes(x=rate, y=quantity, group=type, color=type, fill=type)) + 

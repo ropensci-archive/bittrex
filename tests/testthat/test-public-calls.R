@@ -55,8 +55,7 @@ test_that('The "bt_getorderbook" function works.', {
   expect_true(resp$success)
   expect_is(resp$result, 'list')
   expect_equal(names(resp$result), c("buy", "sell"))
-  expect_is(resp$result$buy, 'data.frame')
-  expect_is(resp$result$sell, 'data.frame')
+  expect_is(resp$result, 'data.frame')
   Sys.sleep(2)
 })
 

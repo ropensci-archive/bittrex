@@ -2,7 +2,7 @@
 % Please edit documentation in R/private-interface.r
 \name{bt_sell}
 \alias{bt_sell}
-\title{Place a Sell Limit Order}
+\title{Place a Sell Order}
 \usage{
 bt_sell(market, quantity, rate, type = c("limit", "market"))
 }
@@ -34,16 +34,26 @@ A named list with the following elements:
 }
 }
 \description{
-The \code{bt_sell} function places a buy order onto the 
-C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
+The \code{bt_sell} function places a sell order onto the 
+bittrex crypto-currency exchange \url{https://bittrex.com}. This function
 only works if you have set up authentication. 
 
 NOTE: market orders are disabled as of July 7, 2017.
 }
 \examples{
 \dontrun{
-# Sell one litecoin for 0.000001 bitcoins. 
-order = bt_sell("btc-ltc", 1, 0.000001)
+# Note you must authenticate first.
+# Sell one tenth of one Ethereum coin for 1 Bitcoin. 
+bt_sell("eth-btc", 0.1, 1)
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+# $result$uuid
+# [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
 }
 }
 \references{

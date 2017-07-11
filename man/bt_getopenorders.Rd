@@ -31,7 +31,23 @@ can be used after you provide information for authentication.
 }
 \examples{
 \dontrun{
+# Note you must authenticate first.
 bt_getopenorders()
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#   uuid                           order_uuid exchange order_type quantity
+# 1   NA 2d6169e9-17fb-4f2a-8aff-37418b515624  ETH-LTC  LIMIT_BUY        1
+#   quantity_remaining limit commission_paid price price_per_unit
+# 1                  1 0.001               0     0             NA
+#                   opened closed cancel_initiated immediate_or_cancel
+# 1 2017-07-11T18:53:30.07     NA            FALSE               FALSE
+#   is_conditional condition condition_target
+# 1          FALSE      NONE               NA
 }
 }
 \references{

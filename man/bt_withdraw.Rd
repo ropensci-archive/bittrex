@@ -32,6 +32,7 @@ It does not include the transaction fee.
 }
 \examples{
 \dontrun{
+# Note you must authenticate first.
 # Send the author your bitcoins.
 bt_widthdraw("btc", 10, "1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2")
 }

@@ -31,6 +31,22 @@ provide authentication information.
 \examples{
 \dontrun{
 bt_getdeposithistory()
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#         id     amount currency confirmations        last_updated
+# 1 20774372 0.39125728      ETH            49 2017-06-22 16:05:50
+# 2 18255803 0.05936286      BTC             6 2017-05-19 16:28:36
+#                                                                tx_id
+# 1 0xbecc44384d8b94f1d03834ffb9324e97e4fa2a8161e17e61116aaabd5fb35050
+# 2   7084cad99373475d8137547ce947b1472bfcb2d23b5160b05010f1f15e3c6287
+#                               crypto_address
+# 1 0x0ceac821a72037b07df691a53e201d797252b5a6
+# 2         1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 }
 }
 \references{

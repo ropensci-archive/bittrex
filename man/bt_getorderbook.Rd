@@ -12,7 +12,8 @@ bt_getorderbook(market, type = c("both", "buy", "sell"), depth = 50)
 \item{type}{type of orders to retrieve (default is "both")}
 
 \item{depth}{how deep should the returned order book be (default and 
-maximum are 50).}
+maximum are 50). This is the size and price of bids whose price is 
+lower than the highest bid and higher than the lowest ask.}
 }
 \value{
 A named list with the following elements:

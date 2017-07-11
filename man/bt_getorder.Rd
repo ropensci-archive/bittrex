@@ -29,7 +29,27 @@ can be used after you provide information for authentication.
 }
 \examples{
 \dontrun{
+# Note you must authenticate and define a uuid first.
 bt_getorder(uuid)
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#   account_id                           order_uuid exchange      type quantity
+# 1         NA 63181c27-dd14-476e-960c-1bd8366bb312  ETH-LTC LIMIT_BUY        1
+#   quantity_remaining limit reserved reserve_remaining commission_reserved
+# 1                  1 0.001    0.001             0.001             2.5e-06
+#   commission_reserve_remaining commission_paid price price_per_unit
+# 1                      2.5e-06               0     0             NA
+#                    opened closed is_open                             sentinel
+# 1 2017-07-11T17:05:55.583     NA    TRUE 78b210fa-a156-4f4d-8043-51163740056f
+#   cancel_initiated immediate_or_cancel is_conditional condition
+# 1            FALSE               FALSE          FALSE      NONE
+#   condition_target
+# 1               NA
 }
 }
 \references{

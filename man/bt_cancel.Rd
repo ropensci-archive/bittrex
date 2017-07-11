@@ -27,7 +27,15 @@ the \code{link{bt_buy}} or \code{link{bt_sell}} functions.
 }
 \examples{
 \dontrun{
+# Note you must authenticate and define a uuid first.
 bt_cancel(uuid) 
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
 }
 }
 \references{

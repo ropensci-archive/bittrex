@@ -33,6 +33,29 @@ function can be used after you provide authentication information.
 \examples{
 \dontrun{
 bt_getorderhistory()
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#                             order_uuid exchange time_stamp order_type   limit
+# 1 c04bc07b-e6a9-4f47-a2c8-f9eb3c9a7fa1  BTC-ETH       <NA> LIMIT_SELL 0.11771
+# 2 319fcc92-0b0d-43f1-a538-18f790d85ffa  BTC-ETH       <NA> LIMIT_SELL 0.14170
+# 3 cd052594-d655-4e79-bec6-383ba7be8302  BTC-ETH       <NA> LIMIT_SELL 0.14020
+#   quantity quantity_remaining commission      price price_per_unit
+# 1    0.400                  0 0.00011772 0.04708801      0.1177200
+# 2    0.100                  0 0.00003542 0.01417000      0.1417000
+# 3    0.175                  0 0.00006133 0.02453499      0.1401999
+#   is_conditional condition condition_target immediate_or_cancel
+# 1          FALSE      NONE               NA               FALSE
+# 2          FALSE      NONE               NA               FALSE
+# 3          FALSE      NONE               NA               FALSE
+#                    closed
+# 1 2017-06-22T20:06:23.973
+# 2   2017-06-13T15:33:20.4
+# 3 2017-06-13T14:59:13.923
 }
 }
 \references{

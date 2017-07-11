@@ -26,7 +26,23 @@ can be used after you provide information for authentication.
 }
 \examples{
 \dontrun{
+# Note you must authenticate first.
 balances = bt_getbalances()$result
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#   currency   balance available pending
+# 1      BTC 0.0000000 0.0000000       0
+# 2      ETH 0.2187638 0.2187638       0
+# 3      LTC 0.0000000 0.0000000       0
+#                               crypto_address
+# 1         1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
+# 2 0x0ceac821a72037b07df691a53e201d797252b5a6
+# 3         Li71CUBjxFH6PfEZn2phqfPhoasydfNfqF
 }
 }
 \references{

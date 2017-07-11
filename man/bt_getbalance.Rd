@@ -29,7 +29,10 @@ can be used after you provide information for authentication.
 }
 \examples{
 \dontrun{
-balances = bt_getbalance("btc")$result
+Note you must authenticate first.
+bt_getbalance("btc")$result
+#   currency balance available pending                     crypto_address
+# 1      BTC       0         0       0 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 }
 }
 \references{

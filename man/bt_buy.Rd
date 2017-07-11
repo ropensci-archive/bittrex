@@ -28,8 +28,7 @@ A named list with the following elements:
    of the order with either the \code{link{getorder}} or 
    \code{link{bt_getopenorders}} function. When the order is fulfilled it
    appears in the order history \code{data.frame} returned by the
-   \code{link{getorderhistory}} function.
- }
+   \code{link{getorderhistory}} function.}
 }
 }
 \description{
@@ -41,15 +40,25 @@ NOTE: market orders are disabled as of July 7, 2017.
 }
 \examples{
 \dontrun{
-# Buy one litecoin for 1169 bitcoins. 
-order = bt_buy("eth-ltc", 1, 0.001)
+# Note you must authenticate first. 
+# Buy one Litecoins for 0.0001 Ethereum.
+bt_buy("eth-ltc", 1, 0.001)
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+# $result$uuid
+# [1] "2d6169e9-17fb-4f2a-8aff-37418b515624"
 }
 }
 \references{
 \url{https://bittrex.com/api/v1.1/market/buylimit}
 }
 \seealso{
-\code{link{bt_authenticate}} \code{\link{bt_sell}}
+\code{\link{bt_authenticate}} \code{\link{bt_sell}}
 \code{\link{bt_getorder}} \code{\link{bt_getopenorders}} 
 \code{\link{bt_getorderhistory}}
 }

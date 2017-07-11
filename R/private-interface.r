@@ -27,7 +27,7 @@ bt_authenticate = function(api_key, secret_key) {
 #' only works after you have set up authentication.
 #'
 #' NOTE: market orders are disabled as of July 7, 2017.
-#' @seealso \code{link{bt_authenticate}} \code{\link{bt_sell}}
+#' @seealso \code{\link{bt_authenticate}} \code{\link{bt_sell}}
 #' \code{\link{bt_getorder}} \code{\link{bt_getopenorders}} 
 #' \code{\link{bt_getorderhistory}}
 #' @references \url{https://bittrex.com/api/v1.1/market/buylimit}
@@ -47,8 +47,7 @@ bt_authenticate = function(api_key, secret_key) {
 #'    of the order with either the \code{link{getorder}} or 
 #'    \code{link{bt_getopenorders}} function. When the order is fulfilled it
 #'    appears in the order history \code{data.frame} returned by the
-#'    \code{link{getorderhistory}} function.
-#'  }
+#'    \code{link{getorderhistory}} function.}
 #' }
 #' @examples
 #' \dontrun{
@@ -132,7 +131,6 @@ bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' # $result
 #' # $result$uuid
 #' # [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
-#' }
 #' }
 #' @export
 bt_sell = function(market, quantity, rate, type=c("limit", "market")) {

@@ -27,8 +27,17 @@ deposit address for a specified currency.
 }
 \examples{
 \dontrun{
-# Get the address of the bitcoin currency.
+# Note you must authenticate first.
 bt_getdepositaddress("btc")
+# $success
+# [1] TRUE
+# 
+# $message
+# [1] ""
+# 
+# $result
+#   currency                            address
+# 1      BTC 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 }
 }
 \references{
