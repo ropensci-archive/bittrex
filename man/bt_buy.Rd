@@ -42,7 +42,7 @@ NOTE: market orders are disabled as of July 7, 2017.
 \examples{
 \dontrun{
 # Buy one litecoin for 1169 bitcoins. 
-order = bt_buy("btc-ltc", 1, 0.0001)
+order = bt_buy("eth-ltc", 1, 0.001)
 }
 }
 \references{

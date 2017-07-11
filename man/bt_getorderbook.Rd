@@ -33,7 +33,7 @@ exchange (\url{https://bittrex.com}).
 }
 \examples{
 \dontrun{
-ob = bt_getorderbook("usd-btc")$result
+ob = bt_getorderbook("btc-eth")$result
 head(ob$buy)
 head(ob$sell)
 }

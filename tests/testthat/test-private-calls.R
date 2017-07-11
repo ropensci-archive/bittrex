@@ -11,7 +11,7 @@ test_that('The "bt_authenticate" function works.', {
 
 test_that('The "bt_buy" and "bt_cancel" functions work.', {
   bt_authenticate(api_key, secret_key)
-  resp = bt_buy("btc-ltc", 100, 0.0001)
+  resp = bt_buy("btc-ltc", 100, 0.00001)
   if (api_key == "bunk" && secret_key == "bunk") {
     expect_false(resp$success, FALSE)
     expect_equal(resp$message, "APIKEY_INVALID")

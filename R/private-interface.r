@@ -52,8 +52,18 @@ bt_authenticate = function(api_key, secret_key) {
 #' }
 #' @examples
 #' \dontrun{
-#' # Buy one litecoin for 1169 bitcoins. 
-#' order = bt_buy("btc-ltc", 1, 0.0001)
+#' # Note you must authenticate first. 
+#' # Buy one Litecoins for 0.0001 Ethereum.
+#' bt_buy("eth-ltc", 1, 0.001)
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' # $result$uuid
+#' # [1] "2d6169e9-17fb-4f2a-8aff-37418b515624"
 #' }
 #' @export
 bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
@@ -79,9 +89,9 @@ bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
   priv_req(req)
 }
 
-#' @title Place a Sell Limit Order
-#' @description The \code{bt_sell} function places a buy order onto the 
-#' C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
+#' @title Place a Sell Order
+#' @description The \code{bt_sell} function places a sell order onto the 
+#' bittrex crypto-currency exchange \url{https://bittrex.com}. This function
 #' only works if you have set up authentication. 
 #' 
 #' NOTE: market orders are disabled as of July 7, 2017.
@@ -110,8 +120,19 @@ bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' }
 #' @examples
 #' \dontrun{
-#' # Sell one litecoin for 0.000001 bitcoins. 
-#' order = bt_sell("btc-ltc", 1, 0.000001)
+#' # Note you must authenticate first.
+#' # Sell one tenth of one Ethereum coin for 1 Bitcoin. 
+#' bt_sell("eth-btc", 0.1, 1)
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' # $result$uuid
+#' # [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
+#' }
 #' }
 #' @export
 bt_sell = function(market, quantity, rate, type=c("limit", "market")) {
@@ -155,7 +176,15 @@ bt_sell = function(market, quantity, rate, type=c("limit", "market")) {
 #' }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate and define a uuid first.
 #' bt_cancel(uuid) 
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
 #' }
 #' @export
 bt_cancel = function(uuid) {
@@ -187,7 +216,23 @@ bt_cancel = function(uuid) {
 #' }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate first.
 #' bt_getopenorders()
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #   uuid                           order_uuid exchange order_type quantity
+#' # 1   NA 2d6169e9-17fb-4f2a-8aff-37418b515624  ETH-LTC  LIMIT_BUY        1
+#' #   quantity_remaining limit commission_paid price price_per_unit
+#' # 1                  1 0.001               0     0             NA
+#' #                   opened closed cancel_initiated immediate_or_cancel
+#' # 1 2017-07-11T18:53:30.07     NA            FALSE               FALSE
+#' #   is_conditional condition condition_target
+#' # 1          FALSE      NONE               NA
 #' }
 #' @export
 bt_getopenorders = function(market) {
@@ -202,6 +247,17 @@ bt_getopenorders = function(market) {
   ret = priv_req(req)
   if ( (ret$success == TRUE) && (length(ret$result) > 0)) {
     ret$result = result_to_df(ret$result)
+  } else if (ret$success == TRUE) {
+    ret$result = data.frame(uuid=character(), order_uuid=character(), 
+      exchange=character(), order_type=character(), quantity=numeric(),
+      quantity_remaining=numeric(), limit=numeric(),
+      commission_paid=numeric(),
+      price=numeric(), price_per_unit=numeric(),
+      opened=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
+      closed=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
+      cancel_initiated=logical(),
+      immediate_or_cancel=logical(), is_conditional=logical(),
+      condition=character(), condition_target=character())
   }
   ret
 }
@@ -225,7 +281,23 @@ bt_getopenorders = function(market) {
 #' }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate first.
 #' balances = bt_getbalances()$result
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #   currency   balance available pending
+#' # 1      BTC 0.0000000 0.0000000       0
+#' # 2      ETH 0.2187638 0.2187638       0
+#' # 3      LTC 0.0000000 0.0000000       0
+#' #                               crypto_address
+#' # 1         1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
+#' # 2 0x0ceac821a72037b07df691a53e201d797252b5a6
+#' # 3         Li71CUBjxFH6PfEZn2phqfPhoasydfNfqF
 #' }
 #' @export
 bt_getbalances = function() {
@@ -233,10 +305,14 @@ bt_getbalances = function() {
     paste0("getbalances?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
   ret = priv_req(req)
   if (ret$success) {
-    if (length(ret$result) == 1)
+    if (length(ret$result) == 1) {
       ret$result = as_data_frame(ret$result)
-    else if (length(ret$result) > 1) 
+    } else if (length(ret$result) > 1) {
       ret$result = result_to_df(ret$result)
+    } else { # length(ret$result) == 0
+      ret$result = data.frame(currency=character(), balance=numeric(), 
+        available=numeric(), pending=numeric(), crypt_address=character())
+    }
   }
   ret
 }
@@ -261,18 +337,27 @@ bt_getbalances = function() {
 #' }
 #' @examples
 #' \dontrun{
-#' balances = bt_getbalance("btc")$result
+#' Note you must authenticate first.
+#' bt_getbalance("btc")$result
+#' #   currency balance available pending                     crypto_address
+#' # 1      BTC       0         0       0 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
+
 #' }
 #' @export
 bt_getbalance = function(currency) {
   req = paste(account_url,
     paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
       "&currency=", currency), sep="/")
-  ret = priv_req(req)
-  if (ret$success) {
-    ret$result = as_data_frame(ret$result)
+  resp = priv_req(req)
+  if (resp$success && is.null(resp$result$Balance)) {
+    for (i in seq_along(resp$result)) {
+      if (is.null(resp$result[[i]])) resp$result[[i]] = NA
+    }
   }
-  ret
+  if (resp$success) {
+    resp$result = as_data_frame(resp$result)
+  }
+  resp
 }
 
 #' @title Retrieve the Address for a Specified Currency
@@ -292,8 +377,17 @@ bt_getbalance = function(currency) {
 #' }
 #' @examples
 #' \dontrun{
-#' # Get the address of the bitcoin currency.
+#' # Note you must authenticate first.
 #' bt_getdepositaddress("btc")
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #   currency                            address
+#' # 1      BTC 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 #' }
 #' @export
 bt_getdepositaddress = function(currency) {
@@ -301,6 +395,10 @@ bt_getdepositaddress = function(currency) {
     paste0("getdepositaddress?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency), sep="/")
   ret = priv_req(req)
+
+  # If the enpoint is queried and an address does not exist, one is generated.
+  if (ret$message == "ADDRESS_GENERATING") 
+    ret = bt_getdepositaddress(currency)
   if (ret$success) {
     ret$result = as_data_frame(ret$result)    
   }
@@ -327,6 +425,7 @@ bt_getdepositaddress = function(currency) {
 #'  }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate first.
 #' # Send the author your bitcoins.
 #' bt_widthdraw("btc", 10, "1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2")
 #' }
@@ -361,21 +460,50 @@ bt_withdraw = function(currency, quantity, address, paymentid) {
 #' }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate and define a uuid first.
 #' bt_getorder(uuid)
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #   account_id                           order_uuid exchange      type quantity
+#' # 1         NA 63181c27-dd14-476e-960c-1bd8366bb312  ETH-LTC LIMIT_BUY        1
+#' #   quantity_remaining limit reserved reserve_remaining commission_reserved
+#' # 1                  1 0.001    0.001             0.001             2.5e-06
+#' #   commission_reserve_remaining commission_paid price price_per_unit
+#' # 1                      2.5e-06               0     0             NA
+#' #                    opened closed is_open                             sentinel
+#' # 1 2017-07-11T17:05:55.583     NA    TRUE 78b210fa-a156-4f4d-8043-51163740056f
+#' #   cancel_initiated immediate_or_cancel is_conditional condition
+#' # 1            FALSE               FALSE          FALSE      NONE
+#' #   condition_target
+#' # 1               NA
 #' }
 #' @export
 bt_getorder = function(uuid) {
   req = paste(account_url, paste0("getorder?apikey=", 
     Sys.getenv("BITTREX_API_KEY"), "&uuid=", uuid), sep="/")
   resp = priv_req(req)
-  ret = NULL
+  ret = data.frame(account_id=character(), order_uuid=character(), 
+    exchange=character(), type=character(),
+    quantity=numeric(), quantity_remaining=numeric(), limit=numeric(), 
+    reserved=numeric(), reserve_remaining=numeric(), 
+    commission_reserved=numeric(), 
+    commission_reserve_remaining=numeric(), commission_paid=numeric(), 
+    price=numeric(), price_per_unit=numeric(), 
+    opened=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")), 
+    closed=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
+    is_open=logical(), sentinel=character(), cancel_initiated=logical(), 
+    immediate_or_cancel=logical(), is_conditional=logical(),
+    condition=character(), condition_target=character())
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
-      for (j in seq_along(resp$result[[i]])) {
-        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
-      }
+      if (is.null(resp$result[[i]])) resp$result[[i]] = NA
     }
-    ret = Reduce(rbind, Map(as_data_frame, resp$result))
+    ret = data.frame(resp$result)
     names(ret) = camel_to_snake(names(ret))
   }
   resp$result = ret
@@ -406,6 +534,29 @@ bt_getorder = function(uuid) {
 #' @examples
 #' \dontrun{
 #' bt_getorderhistory()
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #                             order_uuid exchange time_stamp order_type   limit
+#' # 1 c04bc07b-e6a9-4f47-a2c8-f9eb3c9a7fa1  BTC-ETH       <NA> LIMIT_SELL 0.11771
+#' # 2 319fcc92-0b0d-43f1-a538-18f790d85ffa  BTC-ETH       <NA> LIMIT_SELL 0.14170
+#' # 3 cd052594-d655-4e79-bec6-383ba7be8302  BTC-ETH       <NA> LIMIT_SELL 0.14020
+#' #   quantity quantity_remaining commission      price price_per_unit
+#' # 1    0.400                  0 0.00011772 0.04708801      0.1177200
+#' # 2    0.100                  0 0.00003542 0.01417000      0.1417000
+#' # 3    0.175                  0 0.00006133 0.02453499      0.1401999
+#' #   is_conditional condition condition_target immediate_or_cancel
+#' # 1          FALSE      NONE               NA               FALSE
+#' # 2          FALSE      NONE               NA               FALSE
+#' # 3          FALSE      NONE               NA               FALSE
+#' #                    closed
+#' # 1 2017-06-22T20:06:23.973
+#' # 2   2017-06-13T15:33:20.4
+#' # 3 2017-06-13T14:59:13.923
 #' }
 #' @export
 bt_getorderhistory = function(market) {
@@ -414,7 +565,14 @@ bt_getorderhistory = function(market) {
   if (!missing(market)) 
     req = paste0(req, "&market=", market)
   resp = priv_req(req)
-  ret = list()
+  ret = data.frame(order_uuid=character(), exchange=character(),
+    time_stamp=as.POSIXct(strptime(character(),"%Y-%m-%d %H:%M:%OS", tz="GMT")),
+    order_type=character(), limit=numeric(), quantity=numeric(), 
+    quantity_remaining=numeric(), commission=numeric(), price=numeric(),
+    price_per_unit=numeric(), is_conditional=logical(),
+    condition=character(), condition_target=character(),
+    immediate_or_cancel=logical(),
+    closed=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")))
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
@@ -423,7 +581,8 @@ bt_getorderhistory = function(market) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT")
+    ret$time_stamp = as.POSIXct(
+      strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT"))
   }
   resp$result = ret
   resp
@@ -450,7 +609,35 @@ bt_getorderhistory = function(market) {
 #' }
 #' @examples
 #' \dontrun{
+#' # Note you must authenticate first.
 #' bt_getwithdrawalhistory()
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #                           payment_uuid currency     amount
+#' # 1 ba0c85de-1fd8-423e-939d-e34d2aad34fd      BTC 0.04597029
+#' # 2 f10c3536-fcf2-48eb-9ce4-253271d2c8e8      BTC 0.01313458
+#' # 3 5dae07ad-7a8f-40a0-ac6e-225a3d0d6d8a      BTC 0.02347405
+#' #                              address              opened authorized
+#' # 1 1C31WQL12CDZqnidra9tMfs4DLkebAuNgc 2017-06-22 20:08:26       TRUE
+#' # 2 1C31WQL12CDZqnidra9tMfs4DLkebAuNgc 2017-06-13 15:34:47       TRUE
+#' # 3 1C31WQL12CDZqnidra9tMfs4DLkebAuNgc 2017-06-13 15:03:23       TRUE
+#' #   pending_payment tx_cost
+#' # 1           FALSE   0.001
+#' # 2           FALSE   0.001
+#' # 3           FALSE   0.001
+#' #                                                              tx_id canceled
+#' # 1 e628848ed92be4baee877f97e3a48b22f5ee2f7ca35c2908282b8c9ee2f4b94a    FALSE
+#' # 2 fbafe847d02761d089b19a2cafecff561030219ded1eb03cc796c8c2eac0dd5c    FALSE
+#' # 3 c981f7dc569188db16753cff4ab24aef148039964b68428603e2bfd18c754df4    FALSE
+#' #   invalid_address
+#' # 1           FALSE
+#' # 2           FALSE
+#' # 3           FALSE
 #' }
 #' @export
 bt_getwithdrawalhistory = function(currency) {
@@ -459,7 +646,10 @@ bt_getwithdrawalhistory = function(currency) {
   if (!missing(currency)) 
     req = paste0(req, "&currency=", currency)
   resp = priv_req(req)
-  ret = list()
+  ret = data.frame(payment_uuid=character(), currency=character(), 
+    amount=numeric(), address=character(), opened=character(), 
+    authorized=logical(), pending_payment=logical(), tx_cost=numeric(),
+    tx_id=character(), canceled=logical(), invalid_address=logical())
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
@@ -468,7 +658,7 @@ bt_getwithdrawalhistory = function(currency) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT")
+    ret$opened= strptime(ret$opened, "%Y-%m-%dT%H:%M:%OS", tz="GMT")
   }
   resp$result = ret
   resp
@@ -496,6 +686,22 @@ bt_getwithdrawalhistory = function(currency) {
 #' @examples
 #' \dontrun{
 #' bt_getdeposithistory()
+#' # $success
+#' # [1] TRUE
+#' # 
+#' # $message
+#' # [1] ""
+#' # 
+#' # $result
+#' #         id     amount currency confirmations        last_updated
+#' # 1 20774372 0.39125728      ETH            49 2017-06-22 16:05:50
+#' # 2 18255803 0.05936286      BTC             6 2017-05-19 16:28:36
+#' #                                                                tx_id
+#' # 1 0xbecc44384d8b94f1d03834ffb9324e97e4fa2a8161e17e61116aaabd5fb35050
+#' # 2   7084cad99373475d8137547ce947b1472bfcb2d23b5160b05010f1f15e3c6287
+#' #                               crypto_address
+#' # 1 0x0ceac821a72037b07df691a53e201d797252b5a6
+#' # 2         1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 #' }
 #' @export
 bt_getdeposithistory = function(currency) {
@@ -504,7 +710,11 @@ bt_getdeposithistory = function(currency) {
   if (!missing(currency)) 
     req = paste0(req, "&currency=", currency)
   resp = priv_req(req)
-  ret = list()
+  ret = data.frame(id=integer(), amount=numeric(), currency=character(),
+    confirmation=integer(), 
+    last_updated=as.POSIXct(
+      strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
+    tx_id=character(), crypto_address=character())
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
@@ -513,7 +723,7 @@ bt_getdeposithistory = function(currency) {
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
     names(ret) = camel_to_snake(names(ret))
-    ret$last_updated = strptime(ret$last_updated, "%Y-%m-%dT%H:%M:%OS",tz="GMT")
+    ret$last_updated = as.POSIXct(strptime(ret$last_updated, "%Y-%m-%dT%H:%M:%OS",tz="GMT"))
   }
   resp$result = ret
   resp

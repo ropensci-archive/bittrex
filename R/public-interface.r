@@ -61,7 +61,9 @@ bt_getcurrencies = function() {
 #' Get the Ticker Values for a Market
 #' @description The \code{bt_getticker} function returns the bid, ask, and last
 #' transaction price for a specified market on the Bittrex crypto-currency 
-#' exchange (\url{https://bittrex.com}).
+#' exchange (\url{https://bittrex.com}). The complete list of 
+#' markets is available via the \code{bt_getmarkets} function}
+#' @seealso \link{bt_getmarkets}
 #' @references \url{https://bittrex.com/api/v1.1/public/getticker}
 #' @param market the market to get the ticker for.
 #' @return A named list with the following elements:
@@ -196,7 +198,8 @@ bt_getmarketsummary = function(market) {
 #' @param market the market from which the order book will be retrieved.
 #' @param type type of orders to retrieve (default is "both")
 #' @param depth how deep should the returned order book be (default and 
-#' maximum are 50).
+#' maximum are 50). This is the size and price of bids whose price is 
+#' lower than the highest bid and higher than the lowest ask.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -209,7 +212,7 @@ bt_getmarketsummary = function(market) {
 #' }
 #' @examples
 #' \dontrun{
-#' ob = bt_getorderbook("usd-btc")$result
+#' ob = bt_getorderbook("btc-eth")$result
 #' head(ob$buy)
 #' head(ob$sell)
 #' }
@@ -222,15 +225,19 @@ bt_getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
     if (any(c("both", "buy") %in% names(resp$result))) {
       buy = Reduce(rbind, Map(as_data_frame, resp$result$buy))
       names(buy) = tolower(names(buy))
+      buy$type = "BUY"
     }
     if (any(c("both", "sell") %in% names(resp$result))) {
       sell= Reduce(rbind, Map(as_data_frame, resp$result$sell))
       names(sell) = tolower(names(sell))
+      sell$type = "SELL"
     }
-    if (any(c("both", "buy") %in% names(resp$result)))
-      resp$result$buy = buy
-    if (any(c("both", "sell") %in% names(resp$result)))
-      resp$result$sell = sell
+    if (type[1] == "both")
+      resp$result = rbind(sell, buy)
+    else if (type[1] == "buy")
+      resp$result = buy
+    else # type[1] == "sell"
+      resp$result = sell
   }
   resp
 }
@@ -252,7 +259,7 @@ bt_getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
 #' }
 #' @examples
 #' \dontrun{
-#' mh = bt_getmarkethistory("usd-btc")$result
+#' mh = bt_getmarkethistory("btc-eth")$result
 #' head(mh)
 #' }
 #' @importFrom httr GET content

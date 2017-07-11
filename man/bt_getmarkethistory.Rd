@@ -27,7 +27,7 @@ information for a specified market on the Bittrex crypto-currency exchange
 }
 \examples{
 \dontrun{
-mh = bt_getmarkethistory("usd-btc")$result
+mh = bt_getmarkethistory("btc-eth")$result
 head(mh)
 }
 }
