@@ -32,7 +32,7 @@ exchange (\url{https://bittrex.com}).
 }
 \examples{
 \dontrun{
-ms = bt_getmarketsummary("btc-eth")$result
+ms <- bt_getmarketsummary("btc-eth")$result
 head(ms)
 }
 }

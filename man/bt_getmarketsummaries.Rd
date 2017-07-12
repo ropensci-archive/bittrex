@@ -29,7 +29,7 @@ exchange (\url{https://bittrex.com}) for the last 24 hours.
 }
 \examples{
 \dontrun{
-ms = bt_getmarketsummaries()$result
+ms <- bt_getmarketsummaries()$result
 head(ms)
 }
 }

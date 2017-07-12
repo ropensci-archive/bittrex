@@ -27,7 +27,7 @@ was created and the minimum order size.
 }
 \examples{
 \dontrun{
-markets = bt_getmarkets()$result
+markets <- bt_getmarkets()$result
 head(markets)
 }
 }

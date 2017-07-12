@@ -7,8 +7,7 @@
 bt_getmarkethistory(market)
 }
 \arguments{
-\item{market}{the market from which history data will be retrieved.
-is 100).}
+\item{market}{the market from which history data will be retrieved.}
 }
 \value{
 A named list with the following elements:
@@ -27,7 +26,7 @@ information for a specified market on the Bittrex crypto-currency exchange
 }
 \examples{
 \dontrun{
-mh = bt_getmarkethistory("btc-eth")$result
+mh <- bt_getmarkethistory("btc-eth")$result
 head(mh)
 }
 }

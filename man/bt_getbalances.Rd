@@ -27,7 +27,7 @@ can be used after you provide information for authentication.
 \examples{
 \dontrun{
 # Note you must authenticate first.
-balances = bt_getbalances()$result
+balances <- bt_getbalances()$result
 # $success
 # [1] TRUE
 # 

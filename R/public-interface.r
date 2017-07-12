@@ -17,15 +17,17 @@
 #' }
 #' @examples
 #' \dontrun{
-#' markets = bt_getmarkets()$result
+#' markets <- bt_getmarkets()$result
 #' head(markets)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getmarkets = function() {
-  resp = content(GET(paste(public_url, "getmarkets", sep="/")),
+bt_getmarkets <- function() {
+  resp <- content(GET(paste(public_url, "getmarkets", sep="/")),
     type="application/json")
-  if (resp$success) resp$result = result_to_df(resp$result)
+  if (resp$success) {
+    resp$result <- result_to_df(resp$result)
+  }
   resp
 }
 
@@ -46,15 +48,17 @@ bt_getmarkets = function() {
 #' }
 #' @examples
 #' \dontrun{
-#' currencies = bt_getcurrencies()$result
+#' currencies <- bt_getcurrencies()$result
 #' head(markets)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getcurrencies = function() {
-  resp = content(GET(paste(public_url, "getcurrencies", sep="/")),
+bt_getcurrencies <- function() {
+  resp <- content(GET(paste(public_url, "getcurrencies", sep="/")),
     type="application/json")
-  if (resp$success) resp$result = result_to_df(resp$result)
+  if (resp$success) {
+    resp$result <- result_to_df(resp$result)
+  }
   resp
 }
 
@@ -81,11 +85,13 @@ bt_getcurrencies = function() {
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getticker = function(market) {
-  resp = content(GET(
+bt_getticker <- function(market) {
+  resp <- content(GET(
     paste(public_url, paste0("getticker?market=", market), sep="/")),
     type="application/json")
-  if (resp$success) resp$result = as_data_frame(resp$result)
+  if (resp$success) {
+    resp$result <- as_data_frame(resp$result)
+  }
   resp
 }
 
@@ -110,19 +116,19 @@ bt_getticker = function(market) {
 #' }
 #' @examples
 #' \dontrun{
-#' ms = bt_getmarketsummaries()$result
+#' ms <- bt_getmarketsummaries()$result
 #' head(ms)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getmarketsummaries = function() {
-  resp = content(GET(
+bt_getmarketsummaries <- function() {
+  resp <- content(GET(
     paste(public_url, "getmarketsummaries", sep="/")),
     type="application/json")
   if (resp$success) {
-    resp$result = result_to_df(resp$result)
-    resp$result$time_stamp = timestamp_to_posix(resp$result$time_stamp)
-    resp$result$created = timestamp_to_posix(resp$result$created)
+    resp$result <- result_to_df(resp$result)
+    resp$result$time_stamp <- timestamp_to_posix(resp$result$time_stamp)
+    resp$result$created <- timestamp_to_posix(resp$result$created)
   }
   resp
 }
@@ -142,8 +148,8 @@ bt_getmarketsummaries = function() {
 #' }
 #' @importFrom httr GET status_code
 #' @export
-bt_api_check = function(warn=TRUE) {
-  resp = GET(paste(public_url, "getmarketsummaries", sep="/"))
+bt_api_check <- function(warn=TRUE) {
+  resp <- GET(paste(public_url, "getmarketsummaries", sep="/"))
   if (status_code(resp) != 200) {
     if (warn) warning(paste("Status code:", status_code(resp)))
   } else {
@@ -173,19 +179,19 @@ bt_api_check = function(warn=TRUE) {
 #' }
 #' @examples
 #' \dontrun{
-#' ms = bt_getmarketsummary("btc-eth")$result
+#' ms <- bt_getmarketsummary("btc-eth")$result
 #' head(ms)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getmarketsummary = function(market) {
-  resp = content(GET(paste(public_url,
+bt_getmarketsummary <- function(market) {
+  resp <- content(GET(paste(public_url,
     paste0("getmarketsummary?market=", market), sep="/")),
     type="application/json")
   if (resp$success) {
-    resp$result = as_data_frame(resp$result)
-    resp$result$time_stamp = timestamp_to_posix(resp$result$time_stamp)
-    resp$result$created= timestamp_to_posix(resp$result$created)
+    resp$result <- as_data_frame(resp$result)
+    resp$result$time_stamp <- timestamp_to_posix(resp$result$time_stamp)
+    resp$result$created <- timestamp_to_posix(resp$result$created)
   }
   resp
 }
@@ -212,32 +218,32 @@ bt_getmarketsummary = function(market) {
 #' }
 #' @examples
 #' \dontrun{
-#' ob = bt_getorderbook("btc-eth")$result
-#' head(ob$buy)
-#' head(ob$sell)
+#' head(bt_getorderbook("btc-eth")$result)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
-  resp = content(GET(paste(public_url, 
-    paste0("getorderbook?market=", market, "&type=", type[1], "&depth=", depth),    sep="/")), type="application/json")
+bt_getorderbook <- function(market, type=c("both", "buy", "sell"), depth=50) {
+  resp <- content(GET(paste(public_url, 
+    paste0("getorderbook?market=", market, "&type=", type[1], "&depth=", depth),
+    sep="/")), type="application/json")
   if (resp$success) {
     if (any(c("both", "buy") %in% names(resp$result))) {
-      buy = Reduce(rbind, Map(as_data_frame, resp$result$buy))
-      names(buy) = tolower(names(buy))
-      buy$type = "BUY"
+      buy <- Reduce(rbind, Map(as_data_frame, resp$result$buy))
+      names(buy) <- tolower(names(buy))
+      buy$type <- "BUY"
     }
     if (any(c("both", "sell") %in% names(resp$result))) {
-      sell= Reduce(rbind, Map(as_data_frame, resp$result$sell))
-      names(sell) = tolower(names(sell))
-      sell$type = "SELL"
+      sell <- Reduce(rbind, Map(as_data_frame, resp$result$sell))
+      names(sell) <- tolower(names(sell))
+      sell$type <- "SELL"
     }
-    if (type[1] == "both")
-      resp$result = rbind(sell, buy)
-    else if (type[1] == "buy")
-      resp$result = buy
-    else # type[1] == "sell"
-      resp$result = sell
+    if (type[1] == "both") {
+      resp$result <- rbind(sell, buy)
+    } else if (type[1] == "buy") {
+      resp$result <- buy
+    } else { # type[1] == "sell"
+      resp$result <- sell
+    }
   }
   resp
 }
@@ -258,21 +264,21 @@ bt_getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
 #' }
 #' @examples
 #' \dontrun{
-#' mh = bt_getmarkethistory("btc-eth")$result
+#' mh <- bt_getmarkethistory("btc-eth")$result
 #' head(mh)
 #' }
 #' @importFrom httr GET content
 #' @export
-bt_getmarkethistory = function(market) {
-  resp = content(GET(paste(public_url, 
+bt_getmarkethistory <- function(market) {
+  resp <- content(GET(paste(public_url, 
     paste0("getmarkethistory?market=", market), sep="/")),
     type="application/json")
   if (resp$succes) {
     if (length(resp$result) > 0) {
-      resp$result = result_to_df(resp$result)
-      resp$result$time_stamp = timestamp_to_posix(resp$result$time_stamp)
+      resp$result <- result_to_df(resp$result)
+      resp$result$time_stamp <- timestamp_to_posix(resp$result$time_stamp)
     } else {
-      resp$result = NULL
+      resp$result <- NULL
     }
   }
   resp

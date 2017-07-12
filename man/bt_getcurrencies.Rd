@@ -25,7 +25,7 @@ currencies on the Bittrex crypto-currency exchange
 }
 \examples{
 \dontrun{
-currencies = bt_getcurrencies()$result
+currencies <- bt_getcurrencies()$result
 head(markets)
 }
 }

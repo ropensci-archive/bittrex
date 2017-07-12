@@ -34,9 +34,7 @@ exchange (\url{https://bittrex.com}).
 }
 \examples{
 \dontrun{
-ob = bt_getorderbook("btc-eth")$result
-head(ob$buy)
-head(ob$sell)
+head(bt_getorderbook("btc-eth")$result)
 }
 }
 \references{

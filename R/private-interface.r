@@ -1,9 +1,9 @@
 #' @importFrom httr GET content add_headers
 #' @importFrom openssl sha512
-priv_req = function(req) {
-  str_time = as.character(as.integer(Sys.time()))
-  req = paste0(req, "&nonce=", str_time)
-  sig = sha512(req, Sys.getenv("BITTREX_SECRET_KEY"))
+priv_req <- function(req) {
+  str_time <- as.character(as.integer(Sys.time()))
+  req <- paste0(req, "&nonce=", str_time)
+  sig <- sha512(req, Sys.getenv("BITTREX_SECRET_KEY"))
   content(GET(req, add_headers(apisign=sig)), type="application/json")
 }
 
@@ -15,7 +15,7 @@ priv_req = function(req) {
 #' @param api_key the api key provided by the exchange
 #' @param secret_key the secret key provided by the exchange
 #' @export
-bt_authenticate = function(api_key, secret_key) {
+bt_authenticate <- function(api_key, secret_key) {
   Sys.setenv("BITTREX_API_KEY"=api_key)
   Sys.setenv("BITTREX_SECRET_KEY"=secret_key)
   invisible(TRUE)
@@ -65,20 +65,20 @@ bt_authenticate = function(api_key, secret_key) {
 #' # [1] "2d6169e9-17fb-4f2a-8aff-37418b515624"
 #' }
 #' @export
-bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
-  req = market_url
+bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
+  req <- market_url
   if (type[1] == "market") {
     if (!missing(rate)) {
       warning("Rate parameter is ignored for market orders.")
     }
-    req = paste(req, 
+    req <- paste(req, 
       paste0("buymarket?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity), sep="/")
   } else if (type[1] == "limit") {
     if (missing(rate)) {
       stop("Rate must be specified for limit orders.")
     }
-    req = paste(req, 
+    req <- paste(req, 
       paste0("buylimit?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity,
              "&rate=", rate), sep="/")
@@ -133,20 +133,20 @@ bt_buy = function(market, quantity, rate, type=c("limit", "market")) {
 #' # [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
 #' }
 #' @export
-bt_sell = function(market, quantity, rate, type=c("limit", "market")) {
-  req = market_url
+bt_sell <- function(market, quantity, rate, type=c("limit", "market")) {
+  req <- market_url
   if (type[1] == "market") {
     if (!missing(rate)) {
       warning("Rate parameter is ignored for market orders.")
     }
-    req = paste(req, 
+    req <- paste(req, 
       paste0("sellmarket?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity), sep="/")
   } else if (type[1] == "limit") {
     if (missing(rate)) {
       stop("Rate must be specified for limit orders.")
     }
-    req = paste(req, 
+    req <- paste(req, 
       paste0("selllimit?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity,
              "&rate=", rate), sep="/")
@@ -185,8 +185,8 @@ bt_sell = function(market, quantity, rate, type=c("limit", "market")) {
 #' # $result
 #' }
 #' @export
-bt_cancel = function(uuid) {
-  req = paste(market_url, 
+bt_cancel <- function(uuid) {
+  req <- paste(market_url, 
     paste0("cancel?apikey=", Sys.getenv("BITTREX_API_KEY"),
            "&uuid=", uuid), sep="/")
   priv_req(req)
@@ -233,20 +233,20 @@ bt_cancel = function(uuid) {
 #' # 1          FALSE      NONE               NA
 #' }
 #' @export
-bt_getopenorders = function(market) {
+bt_getopenorders <- function(market) {
   if (missing(market)) {
-    req = paste(market_url, 
+    req <- paste(market_url, 
       paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
   } else {
-    req = paste(market_url, 
+    req <- paste(market_url, 
       paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market), sep="/")
   }
-  ret = priv_req(req)
+  ret <- priv_req(req)
   if ( (ret$success == TRUE) && (length(ret$result) > 0)) {
-    ret$result = result_to_df(ret$result)
+    ret$result <- result_to_df(ret$result)
   } else if (ret$success == TRUE) {
-    ret$result = data.frame(uuid=character(), order_uuid=character(), 
+    ret$result <- data.frame(uuid=character(), order_uuid=character(), 
       exchange=character(), order_type=character(), quantity=numeric(),
       quantity_remaining=numeric(), limit=numeric(),
       commission_paid=numeric(),
@@ -280,7 +280,7 @@ bt_getopenorders = function(market) {
 #' @examples
 #' \dontrun{
 #' # Note you must authenticate first.
-#' balances = bt_getbalances()$result
+#' balances <- bt_getbalances()$result
 #' # $success
 #' # [1] TRUE
 #' # 
@@ -298,17 +298,17 @@ bt_getopenorders = function(market) {
 #' # 3         Li71CUBjxFH6PfEZn2phqfPhoasydfNfqF
 #' }
 #' @export
-bt_getbalances = function() {
-  req = paste(account_url,
+bt_getbalances <- function() {
+  req <- paste(account_url,
     paste0("getbalances?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
-  ret = priv_req(req)
+  ret <- priv_req(req)
   if (ret$success) {
     if (length(ret$result) == 1) {
-      ret$result = as_data_frame(ret$result)
+      ret$result <- as_data_frame(ret$result)
     } else if (length(ret$result) > 1) {
-      ret$result = result_to_df(ret$result)
+      ret$result <- result_to_df(ret$result)
     } else { # length(ret$result) == 0
-      ret$result = data.frame(currency=character(), balance=numeric(), 
+      ret$result <- data.frame(currency=character(), balance=numeric(), 
         available=numeric(), pending=numeric(), crypt_address=character())
     }
   }
@@ -342,19 +342,19 @@ bt_getbalances = function() {
 
 #' }
 #' @export
-bt_getbalance = function(currency) {
-  req = paste(account_url,
+bt_getbalance <- function(currency) {
+  req <- paste(account_url,
     paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
       "&currency=", currency), sep="/")
-  resp = priv_req(req)
+  resp <- priv_req(req)
   if (resp$success && is.null(resp$result$Balance)) {
     for (i in seq_along(resp$result)) {
-      if (is.null(resp$result[[i]])) resp$result[[i]] = 0
-      resp$result$CryptoAddress = NA
+      if (is.null(resp$result[[i]])) resp$result[[i]] <- 0
+      resp$result$CryptoAddress <- NA
     }
   }
   if (resp$success) {
-    resp$result = as_data_frame(resp$result)
+    resp$result <- as_data_frame(resp$result)
   }
   resp
 }
@@ -389,17 +389,17 @@ bt_getbalance = function(currency) {
 #' # 1      BTC 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 #' }
 #' @export
-bt_getdepositaddress = function(currency) {
-  req = paste(account_url,
+bt_getdepositaddress <- function(currency) {
+  req <- paste(account_url,
     paste0("getdepositaddress?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency), sep="/")
-  ret = priv_req(req)
+  ret <- priv_req(req)
 
   # If the enpoint is queried and an address does not exist, one is generated.
   if (ret$message == "ADDRESS_GENERATING") 
-    ret = bt_getdepositaddress(currency)
+    ret <- bt_getdepositaddress(currency)
   if (ret$success) {
-    ret$result = as_data_frame(ret$result)    
+    ret$result <- as_data_frame(ret$result)    
   }
   ret
 }
@@ -429,13 +429,14 @@ bt_getdepositaddress = function(currency) {
 #' bt_widthdraw("btc", 10, "1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2")
 #' }
 #' @export
-bt_withdraw = function(currency, quantity, address, paymentid) {
-  req = paste(account_url, 
+bt_withdraw <- function(currency, quantity, address, paymentid) {
+  req <- paste(account_url, 
     paste0("withdraw?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency, "&quantity=", quantity, "&address=", address),
       sep="/")
-  if (!missing(paymentid))
-    req = paste0(req, "&paymentid=", paymentid)
+  if (!missing(paymentid)) {
+    req <- paste0(req, "&paymentid=", paymentid)
+  }
   priv_req(req)
 }
 
@@ -482,11 +483,11 @@ bt_withdraw = function(currency, quantity, address, paymentid) {
 #' # 1               NA
 #' }
 #' @export
-bt_getorder = function(uuid) {
-  req = paste(account_url, paste0("getorder?apikey=", 
+bt_getorder <- function(uuid) {
+  req <- paste(account_url, paste0("getorder?apikey=", 
     Sys.getenv("BITTREX_API_KEY"), "&uuid=", uuid), sep="/")
-  resp = priv_req(req)
-  ret = data.frame(account_id=character(), order_uuid=character(), 
+  resp <- priv_req(req)
+  ret <- data.frame(account_id=character(), order_uuid=character(), 
     exchange=character(), type=character(),
     quantity=numeric(), quantity_remaining=numeric(), limit=numeric(), 
     reserved=numeric(), reserve_remaining=numeric(), 
@@ -500,12 +501,14 @@ bt_getorder = function(uuid) {
     condition=character(), condition_target=character())
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
-      if (is.null(resp$result[[i]])) resp$result[[i]] = NA
+      if (is.null(resp$result[[i]])) {
+        resp$result[[i]] <- NA
+      }
     }
-    ret = data.frame(resp$result)
-    names(ret) = camel_to_snake(names(ret))
+    ret <- data.frame(resp$result)
+    names(ret) <- camel_to_snake(names(ret))
   }
-  resp$result = ret
+  resp$result <- ret
   resp
 }
 
@@ -558,13 +561,14 @@ bt_getorder = function(uuid) {
 #' # 3 2017-06-13T14:59:13.923
 #' }
 #' @export
-bt_getorderhistory = function(market) {
-  req = paste(account_url, paste0("getorderhistory?apikey=",
+bt_getorderhistory <- function(market) {
+  req <- paste(account_url, paste0("getorderhistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
-  if (!missing(market)) 
-    req = paste0(req, "&market=", market)
-  resp = priv_req(req)
-  ret = data.frame(order_uuid=character(), exchange=character(),
+  if (!missing(market)) {
+    req <- paste0(req, "&market=", market)
+  }
+  resp <- priv_req(req)
+  ret <- data.frame(order_uuid=character(), exchange=character(),
     time_stamp=as.POSIXct(strptime(character(),"%Y-%m-%d %H:%M:%OS", tz="GMT")),
     order_type=character(), limit=numeric(), quantity=numeric(), 
     quantity_remaining=numeric(), commission=numeric(), price=numeric(),
@@ -575,15 +579,17 @@ bt_getorderhistory = function(market) {
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
-        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
+        if (is.null(resp$result[[i]][[j]])) {
+          resp$result[[i]][[j]] <- NA
+        }
       }
     }
-    ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    names(ret) = camel_to_snake(names(ret))
-    ret$time_stamp = as.POSIXct(
+    ret <- Reduce(rbind, Map(as_data_frame, resp$result))
+    names(ret) <- camel_to_snake(names(ret))
+    ret$time_stamp <- as.POSIXct(
       strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%OS", tz="GMT"))
   }
-  resp$result = ret
+  resp$result <- ret
   resp
 }
 
@@ -639,27 +645,30 @@ bt_getorderhistory = function(market) {
 #' # 3           FALSE
 #' }
 #' @export
-bt_getwithdrawalhistory = function(currency) {
-  req = paste(account_url, paste0("getwithdrawalhistory?apikey=",
+bt_getwithdrawalhistory <- function(currency) {
+  req <- paste(account_url, paste0("getwithdrawalhistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
-  if (!missing(currency)) 
-    req = paste0(req, "&currency=", currency)
-  resp = priv_req(req)
-  ret = data.frame(payment_uuid=character(), currency=character(), 
+  if (!missing(currency)) {
+    req <- paste0(req, "&currency=", currency)
+  }
+  resp <- priv_req(req)
+  ret <- data.frame(payment_uuid=character(), currency=character(), 
     amount=numeric(), address=character(), opened=character(), 
     authorized=logical(), pending_payment=logical(), tx_cost=numeric(),
     tx_id=character(), canceled=logical(), invalid_address=logical())
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
-        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
+        if (is.null(resp$result[[i]][[j]])) {
+          resp$result[[i]][[j]] <- NA
+        }
       }
     }
-    ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    names(ret) = camel_to_snake(names(ret))
-    ret$opened= strptime(ret$opened, "%Y-%m-%dT%H:%M:%OS", tz="GMT")
+    ret <- Reduce(rbind, Map(as_data_frame, resp$result))
+    names(ret) <- camel_to_snake(names(ret))
+    ret$opened <- strptime(ret$opened, "%Y-%m-%dT%H:%M:%OS", tz="GMT")
   }
-  resp$result = ret
+  resp$result <- ret
   resp
 }
 
@@ -703,13 +712,14 @@ bt_getwithdrawalhistory = function(currency) {
 #' # 2         1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 #' }
 #' @export
-bt_getdeposithistory = function(currency) {
-  req = paste(account_url, paste0("getdeposithistory?apikey=",
+bt_getdeposithistory <- function(currency) {
+  req <- paste(account_url, paste0("getdeposithistory?apikey=",
     Sys.getenv("BITTREX_API_KEY")), sep="/")
-  if (!missing(currency)) 
-    req = paste0(req, "&currency=", currency)
-  resp = priv_req(req)
-  ret = data.frame(id=integer(), amount=numeric(), currency=character(),
+  if (!missing(currency)) {
+    req <- paste0(req, "&currency=", currency)
+  }
+  resp <- priv_req(req)
+  ret <- data.frame(id=integer(), amount=numeric(), currency=character(),
     confirmation=integer(), 
     last_updated=as.POSIXct(
       strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
@@ -717,14 +727,17 @@ bt_getdeposithistory = function(currency) {
   if (length(resp$result) > 0) {
     for(i in seq_along(resp$result)) {
       for (j in seq_along(resp$result[[i]])) {
-        if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
+        if (is.null(resp$result[[i]][[j]])) {
+          resp$result[[i]][[j]] <- NA
+        }
       }
     }
-    ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    names(ret) = camel_to_snake(names(ret))
-    ret$last_updated = as.POSIXct(strptime(ret$last_updated, "%Y-%m-%dT%H:%M:%OS",tz="GMT"))
+    ret <- Reduce(rbind, Map(as_data_frame, resp$result))
+    names(ret) <- camel_to_snake(names(ret))
+    ret$last_updated <- as.POSIXct(
+      strptime(ret$last_updated, "%Y-%m-%dT%H:%M:%OS",tz="GMT"))
   }
-  resp$result = ret
+  resp$result <- ret
   resp
 }
 
