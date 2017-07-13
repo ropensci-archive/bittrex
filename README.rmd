@@ -14,6 +14,8 @@ bittrex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.
 [![Build Status](https://travis-ci.org/kaneplusplus/bittrex.svg?branch=master)](https://travis-ci.org/kaneplusplus/bittrex)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kaneplusplus/bittrex?branch=master&svg=true)](https://ci.appveyor.com/project/kaneplusplus/bittrex)
 [![Coverage Status](https://img.shields.io/codecov/c/github/kaneplusplus/bittrex/master.svg)](https://codecov.io/github/kaneplusplus/bittrex?branch=master)
+[![](https://ropensci.org/badges/120_status.svg)](https://github.com/ropensci/onboarding/issues/120)
+
 
 Disclaimer
 ===
@@ -93,3 +95,4 @@ the maintainer directly. Please note that this project is
 released with a [Contributor Code of Conduct](CONDUCT.md).
 By participating in this project you agree to abide by its terms.
 
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
