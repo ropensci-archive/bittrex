@@ -10,6 +10,7 @@ bittrex: An R client for the [Bittrex Crypto-Currency Exchange](https://bittrex.
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/bittrex?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/bittrex)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/bittrex/master.svg)](https://codecov.io/github/ropensci/bittrex?branch=master)
 [![](https://ropensci.org/badges/120_status.svg)](https://github.com/ropensci/onboarding/issues/120)
+[![DOI](https://zenodo.org/badge/88363176.svg)](https://zenodo.org/badge/latestdoi/88363176)
 
 Disclaimer
 ===
