@@ -1,7 +1,7 @@
 Package: bittrex
 Type: Package
 Title: Client for the Bitrex Exchange
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(person("Michael", "Kane", role = c("aut", "cph", "cre"), email = "kaneplusplus@gmail.com"))
 URL: https://github.com/kaneplusplus/bittrex
 BugReports: https://github.com/kaneplusplus/bittrex/issues
