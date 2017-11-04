@@ -9,7 +9,7 @@ bt_buy(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{the quantity of the transaction currency to buy.}
+\item{quantity}{the quantity of the quote currency to buy.}
 
 \item{rate}{the price you are willing to pay per unit of the 
 transaction currency.}

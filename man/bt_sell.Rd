@@ -9,7 +9,7 @@ bt_sell(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{the quantity of the reference currency to sell.}
+\item{quantity}{the quantity of the base currency to sell.}
 
 \item{rate}{the price you would like to get per unit of the 
 transaction 
