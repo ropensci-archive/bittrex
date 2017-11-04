@@ -9,11 +9,9 @@ bt_sell(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{the quantity of the base currency to sell.}
+\item{quantity}{how much of the base currency to sell.}
 
-\item{rate}{the price you would like to get per unit of the 
-transaction 
-currency.}
+\item{rate}{how much you'll sell the base currency quantity for.}
 
 \item{type}{either "market" or "limit". Note that market orders are 
 disabled as of July 7, 2017. (default is limit)}

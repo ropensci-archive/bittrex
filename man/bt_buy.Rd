@@ -9,10 +9,9 @@ bt_buy(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{the quantity of the quote currency to buy.}
+\item{quantity}{how much of the quote currency you want.}
 
-\item{rate}{the price you are willing to pay per unit of the 
-transaction currency.}
+\item{rate}{how much the quote currency for will be bought for.}
 
 \item{type}{either "market" or "limit". Note that market orders are 
 disabled as of July 7, 2017. (default is "limit")}

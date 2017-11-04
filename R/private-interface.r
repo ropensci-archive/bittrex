@@ -32,9 +32,8 @@ bt_authenticate <- function(api_key, secret_key) {
 #' \code{\link{bt_getorderhistory}}
 #' @references \url{https://bittrex.com/api/v1.1/market/buylimit}
 #' @param market the market to place the buy limit order on.
-#' @param quantity the quantity of the quote currency to buy.
-#' @param rate the price you are willing to pay per unit of the 
-#' transaction currency.
+#' @param quantity how much of the quote currency you want. 
+#' @param rate how much the quote currency for will be bought for.
 #' @param type either "market" or "limit". Note that market orders are 
 #' disabled as of July 7, 2017. (default is "limit")
 #' @return A named list with the following elements:
@@ -98,10 +97,8 @@ bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
 #' \code{\link{bt_getopenorders}} \code{\link{bt_getorderhistory}}
 #' @references \url{https://bittrex.com/api/v1.1/market/selllimit}
 #' @param market the market to place the buy limit order on.
-#' @param quantity the quantity of the base currency to sell. 
-#' @param rate the price you would like to get per unit of the 
-#' transaction 
-#' currency.
+#' @param quantity how much of the base currency to sell.
+#' @param rate how much you'll sell the base currency quantity for.
 #' @param type either "market" or "limit". Note that market orders are 
 #' disabled as of July 7, 2017. (default is limit)
 #' @return A named list with the following elements:
