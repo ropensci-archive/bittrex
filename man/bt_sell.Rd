@@ -41,7 +41,7 @@ NOTE: market orders are disabled as of July 7, 2017.
 \examples{
 \dontrun{
 # Note you must authenticate first.
-# Sell one tenth of one Bitcoin for 1 Ethereum. 
+# Sell 1 Ethereum for one tenth of one Bitcoin. 
 bt_sell("btc-eth", 0.1, 1)
 # $success
 # [1] TRUE

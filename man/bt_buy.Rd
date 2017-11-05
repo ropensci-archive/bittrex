@@ -40,7 +40,7 @@ NOTE: market orders are disabled as of July 7, 2017.
 \examples{
 \dontrun{
 # Note you must authenticate first. 
-# Buy one Litecoins for 0.0001 Ethereum.
+# Buy one Litecoin for 0.0001 Ethereum.
 bt_buy("eth-ltc", 1, 0.001)
 # $success
 # [1] TRUE

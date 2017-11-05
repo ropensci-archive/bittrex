@@ -51,7 +51,7 @@ bt_authenticate <- function(api_key, secret_key) {
 #' @examples
 #' \dontrun{
 #' # Note you must authenticate first. 
-#' # Buy one Litecoins for 0.0001 Ethereum.
+#' # Buy one Litecoin for 0.0001 Ethereum.
 #' bt_buy("eth-ltc", 1, 0.001)
 #' # $success
 #' # [1] TRUE
@@ -117,7 +117,7 @@ bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
 #' @examples
 #' \dontrun{
 #' # Note you must authenticate first.
-#' # Sell one tenth of one Bitcoin for 1 Ethereum. 
+#' # Sell 1 Ethereum for one tenth of one Bitcoin. 
 #' bt_sell("btc-eth", 0.1, 1)
 #' # $success
 #' # [1] TRUE
