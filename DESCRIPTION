@@ -2,7 +2,13 @@ Package: bittrex
 Type: Package
 Title: Client for the Bitrex Exchange
 Version: 0.1.7
-Authors@R: c(person("Michael", "Kane", role = c("aut", "cph", "cre"), email = "kaneplusplus@gmail.com"))
+Authors@R: c(
+	person("Michael", "Kane",
+		role = c("aut", "cph", "cre"), 
+		email = "kaneplusplus@gmail.com",
+		comment = "http://orcid.org/0000-0003-1899-6662"
+		)
+	)
 URL: https://github.com/kaneplusplus/bittrex
 BugReports: https://github.com/kaneplusplus/bittrex/issues
 Description: A client for the Bittrex crypto-currency exchange \url{https://bittrex.com/} including the ability to query trade data, manage account balances, and place orders.
@@ -12,3 +18,6 @@ Remotes: bwlewis/rthreejs
 Suggests: covr, testthat, knitr, rmarkdown, threejs, tidyverse, igraph, quantmod
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+X-schema.org-keywords: cryptocurrency, cryptocurency-exchange, finance
+X-schema.org-applicationCategory: Data Access
+X-schema.org-isPartOf: "https://ropensci.org"
