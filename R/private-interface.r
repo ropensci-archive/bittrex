@@ -344,7 +344,7 @@ bt_getbalance <- function(currency) {
     paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
       "&currency=", currency), sep="/")
   resp <- priv_req(req)
-  if (resp$success && is.null(resp$result$Balance)) {
+  if (resp$success && is.null(resp$result$CryptoAddress)) {
     for (i in seq_along(resp$result)) {
       if (is.null(resp$result[[i]])) resp$result[[i]] <- 0
       resp$result$CryptoAddress <- NA
