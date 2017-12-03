@@ -1,7 +1,7 @@
 Package: bittrex
 Type: Package
 Title: Client for the Bitrex Exchange
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: c(
 	person("Michael", "Kane",
 		role = c("aut", "cph", "cre"), 
