@@ -1,0 +1,164 @@
+{
+  "@context": ["https://doi.org/doi:10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@type": "SoftwareSourceCode",
+  "identifier": "bittrex",
+  "description": "A client for the Bittrex crypto-currency exchange \\url{https://bittrex.com/} including the ability to query trade data, manage account balances, and place orders.",
+  "name": "bittrex: Client for the Bitrex Exchange",
+  "codeRepository": "https://github.com/ropensci/bittrex",
+  "issueTracker": "https://github.com/kaneplusplus/bittrex/issues",
+  "license": "https://spdx.org/licenses/LGPL-2.0",
+  "version": "0.1.7",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.3.2",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.3.2 (2016-10-31)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Michael",
+      "familyName": "Kane",
+      "email": "kaneplusplus@gmail.com",
+      "@id": "http://orcid.org/0000-0003-1899-6662"
+    }
+  ],
+  "copyrightHolder": [
+    {
+      "@type": "Person",
+      "givenName": "Michael",
+      "familyName": "Kane",
+      "email": "kaneplusplus@gmail.com",
+      "@id": "http://orcid.org/0000-0003-1899-6662"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Michael",
+    "familyName": "Kane",
+    "email": "kaneplusplus@gmail.com",
+    "@id": "http://orcid.org/0000-0003-1899-6662"
+  },
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "threejs",
+      "name": "threejs",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tidyverse",
+      "name": "tidyverse",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "igraph",
+      "name": "igraph",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "quantmod",
+      "name": "quantmod",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "httr",
+      "name": "httr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "openssl",
+      "name": "openssl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "applicationCategory": "DataAccess",
+  "isPartOf": "\"https://ropensci.org\"",
+  "keywords": ["cryptocurrency", "cryptocurency-exchange", "finance"],
+  "contIntegration": "https://travis-ci.org/ropensci/bittrex",
+  "releaseNotes": "https://github.com/ropensci/bittrex/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/bittrex/blob/master/README.md",
+  "fileSize": "174.209KB"
+}
