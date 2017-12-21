@@ -1,10 +1,6 @@
 Package: bittrex
 Type: Package
-<<<<<<< HEAD
-Title: Client for the Bitrex Exchange
-=======
 Title: Client for the Bittrex Exchange
->>>>>>> 2bbf10151096689027f7b787ecf4b723c1626109
 Version: 0.1.8
 Authors@R: c(
 	person("Michael", "Kane",
