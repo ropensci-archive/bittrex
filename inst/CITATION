@@ -1,0 +1,19 @@
+citHeader("To cite the R bittrex package in publications use:")
+
+citEntry(entry = "Misc",
+  title        = "ropensci/bittrex: Bittrex 0.1.6",
+  author       = personList(as.person("Michael J. Kane"),
+                            as.person("Noam Ross")),
+  journal      = "Journal of Open Open Source Software",
+  year         = "2017",
+  month        = "July",
+  doi          = "10.5281/zenodo.889710",
+  url          = "https://doi.org/10.5281/zenodo.889710",
+
+  textVersion  =
+  paste("Michael J. Kane and Noam Ross (2017).",
+        "ropensci/bittrex: Bittrex 0.1.6.",
+        "Journal of Open Source Software.",
+        "DOI: 10.5281/zenodo.889710.",
+        "URL: https://doi.org/10.5281/zenodo.889710.")
+)
