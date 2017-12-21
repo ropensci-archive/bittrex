@@ -18,17 +18,17 @@ bt_withdraw(currency, quantity, address, paymentid)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{a named list, with element "uuid" whose element is an 
-   integer identifying the order.}
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a named list, with element "uuid" whose element is an
+integer identifying the order.}
+}
 }
 \description{
-The \code{bt_withdraw} function moves funds from a 
-Bittrex (\url{https://bittrex.com} account to a specified address.
-It does not include the transaction fee.
+The \code{bt_withdraw()} function moves funds from a
+\url{https://bittrex.com} account to a specified address. It does not
+include the transaction fee.
 }
 \examples{
 \dontrun{
@@ -38,8 +38,8 @@ bt_widthdraw("btc", 10, "1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2")
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/withdraw}
+https://bittrex.com/api/v1.1/account/withdraw
 }
 \seealso{
-\code{link{currency}}
+\code{\link[=bt_getbalance]{bt_getbalance()}}, \code{\link[=bt_getbalances]{bt_getbalances()}}
 }

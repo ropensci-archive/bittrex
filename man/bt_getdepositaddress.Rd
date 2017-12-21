@@ -12,17 +12,17 @@ bt_getdepositaddress(currency)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string. If an 
-                  address has not been generated this field will have value
-                  "ADDRESS_GENERATING" until it is available.}
- \item{result:  }{a \code{data.frame} with the one row and columns 
-                  providing the currency and the address.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string. If an
+address has not been generated this field will have value
+"ADDRESS_GENERATING" until it is available.}
+\item{result:  }{a \code{data.frame} with the one row and columns
+providing the currency and the address.}
 }
 }
 \description{
-The \code{bt_getdepositaddress} retrieves or creates the account 
+The \code{bt_getdepositaddress()} retrieves or creates the account
 deposit address for a specified currency.
 }
 \examples{
@@ -31,15 +31,15 @@ deposit address for a specified currency.
 bt_getdepositaddress("btc")
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #   currency                            address
 # 1      BTC 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getdepositaddress?apikey=API_KEY&currency=VTC}
+https://bittrex.com/api/v1.1/account/getdepositaddress
 }

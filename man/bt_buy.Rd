@@ -9,55 +9,57 @@ bt_buy(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{how much of the quote currency you want.}
+\item{quantity}{how much of the quote currency you want to buy.}
 
-\item{rate}{how much the quote currency for will be bought for.}
+\item{rate}{the price per unit of the quote currency that you wish to buy at.}
 
-\item{type}{either "market" or "limit". Note that market orders are 
+\item{type}{either "market" or "limit". Note that market orders are
 disabled as of July 7, 2017. (default is "limit")}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{a named list, with element "uuid" whose element is an 
-   integer identifying the order. This value is used to query the status of
-   of the order with either the \code{link{getorder}} or 
-   \code{link{bt_getopenorders}} function. When the order is fulfilled it
-   appears in the order history \code{data.frame} returned by the
-   \code{link{getorderhistory}} function.}
+\item{success: }{a boolean indicating whether the request is successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a named list, with element "uuid" whose element is an
+integer identifying the order. This value is used to query the status of
+of the order with either the \code{\link[=bt_getorder]{bt_getorder()}} or \code{\link[=bt_getopenorders]{bt_getopenorders()}}
+function. When the order is fulfilled it appears in the order history
+\code{data.frame} returned by the \code{\link[=bt_getorderhistory]{bt_getorderhistory()}} function.}
 }
 }
 \description{
-The \code{bt_buy} function places a buy order onto the 
-Bittrex crypto-currency exchange \url{https://bittrex.com}. This function
-only works after you have set up authentication.
-
-NOTE: market orders are disabled as of July 7, 2017.
+The \code{bt_buy()} function places a buy order on
+\url{https://bittrex.com}. This function only works after you have set up
+authentication.
 }
 \examples{
 \dontrun{
-# Note you must authenticate first. 
-# Buy one Litecoin for 0.0001 Ethereum.
-bt_buy("eth-ltc", 1, 0.001)
+# Note you must authenticate first.
+# Buy half a bitcoin at 17000 USDT per bitcoin.
+bt_buy("usdt-btc", 0.5, 17000)
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 # $result$uuid
 # [1] "2d6169e9-17fb-4f2a-8aff-37418b515624"
+
+# Buy 3.4 ETH at 0.063 BTC per ETH
+bt_buy("btc-eth", 3.4, 0.063)
+
+# Buy 2 LTC at 255 USDT per LTC
+bt_buy("usdt-ltc", 2, 255)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/market/buylimit}
+https://bittrex.com/api/v1.1/market/buylimit
 }
 \seealso{
-\code{\link{bt_authenticate}} \code{\link{bt_sell}}
-\code{\link{bt_getorder}} \code{\link{bt_getopenorders}} 
-\code{\link{bt_getorderhistory}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}, \code{\link[=bt_sell]{bt_sell()}}, \code{\link[=bt_getorder]{bt_getorder()}},
+\code{\link[=bt_getopenorders]{bt_getopenorders()}}, \code{\link[=bt_getorderhistory]{bt_getorderhistory()}}
 }

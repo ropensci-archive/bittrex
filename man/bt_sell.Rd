@@ -9,55 +9,58 @@ bt_sell(market, quantity, rate, type = c("limit", "market"))
 \arguments{
 \item{market}{the market to place the buy limit order on.}
 
-\item{quantity}{how much of the base currency to sell.}
+\item{quantity}{how much of the quote currency to sell.}
 
-\item{rate}{how much you'll sell the base currency quantity for.}
+\item{rate}{the price per unit of the quote currency that you wish to sell
+at.}
 
-\item{type}{either "market" or "limit". Note that market orders are 
-disabled as of July 7, 2017. (default is limit)}
+\item{type}{either \code{"market"} or \code{"limit"}. Note that market orders are
+disabled as of July 7, 2017 (default is limit).}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{a named list, called "uuid" whose element is an integer
-   identifying the order. This value is used to query the status of
-   of the order with either the \code{link{bt_getorder}} or 
-   \code{link{bt_getopenorders}} function. When the order is fulfilled it
-   appears in the order history \code{data.frame} returned by the
-   \code{link{bt_getorderhistory}} function.
- }
+\item{success: }{a boolean indicating whether the request is successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result: }{a named list, called "uuid" whose element is an integer
+identifying the order. This value is used to query the status of of the
+order with either the \code{\link[=bt_getorder]{bt_getorder()}} or \code{\link[=bt_getopenorders]{bt_getopenorders()}} function.
+When the order is fulfilled it appears in the order history \code{data.frame}
+returned by the \code{\link[=bt_getorderhistory]{bt_getorderhistory()}} function. }
 }
 }
 \description{
-The \code{bt_sell} function places a sell order onto the 
-bittrex crypto-currency exchange \url{https://bittrex.com}. This function
-only works if you have set up authentication. 
-
-NOTE: market orders are disabled as of July 7, 2017.
+The \code{bt_sell()} function places a sell order on
+\url{https://bittrex.com}. This function only works if you have set up
+authentication.
 }
 \examples{
 \dontrun{
 # Note you must authenticate first.
-# Sell 1 Ethereum for one tenth of one Bitcoin. 
-bt_sell("btc-eth", 0.1, 1)
+# Sell half a bitcoin at 17000 USDT per bitcoin.
+bt_sell("usdt-btc", 0.5, 17000)
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 # $result$uuid
 # [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
+
+# Sell 3.4 ETH at 0.063 BTC per ETH
+bt_sell("btc-eth", 3.4, 0.063)
+
+# Sell 2 LTC at 255 USDT per LTC
+bt_sell("usdt-ltc", 2, 255)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/market/selllimit}
+https://bittrex.com/api/v1.1/market/selllimit
 }
 \seealso{
-\code{link{bt_authenticate}} \code{\link{bt_buy}}
-\code{\link{bt_getopenorders}} \code{\link{bt_getorderhistory}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}, \code{\link[=bt_buy]{bt_buy()}}, \code{\link[=bt_getopenorders]{bt_getopenorders()}},
+\code{\link[=bt_getorderhistory]{bt_getorderhistory()}}
 }

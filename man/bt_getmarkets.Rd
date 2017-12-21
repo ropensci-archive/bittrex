@@ -9,21 +9,19 @@ bt_getmarkets()
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A \code{data.frame} with the market currencies, 
-   base currencies, base currency long name, minimum trade size, maket name,
-   if the market is active, when the market was created, market notices,
-   if the market is sponsored, and the location of the market logo.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A \code{data.frame} with the market currencies,
+base currencies, base currency long name, minimum trade size, market name,
+if the market is active, when the market was created, market notices,
+if the market is sponsored, and the location of the market logo.}
 }
 }
 \description{
-The \code{bt_getmarkets} function returns all of the available
-markets currently available currently available on the 
-Bittrex crypto-currency exchange (\url{https://bittrex.com}) along with
-other information including, among other information, when the exchange
-was created and the minimum order size.
+The \code{bt_getmarkets()} function returns all of the currently
+available markets on \url{https://bittrex.com} along with other information
+including when the exchange was created and the minimum order size.
 }
 \examples{
 \dontrun{
@@ -32,5 +30,5 @@ head(markets)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getmarkets}
+https://bittrex.com/api/v1.1/public/getmarkets
 }

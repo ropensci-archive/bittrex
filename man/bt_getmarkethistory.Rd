@@ -12,17 +12,16 @@ bt_getmarkethistory(market)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A code{data.frame} containing recent trade information
-   including the order type, time, quantity, price, and fill type.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A \code{data.frame} containing recent trade information
+including the order type, time, quantity, price, and fill type.}
 }
 }
 \description{
-the \code{bt_getmarkethistory} function retrieves recent trade
-information for a specified market on the Bittrex crypto-currency exchange 
-(\url{https://bittrex.com}).
+the \code{bt_getmarkethistory()} function retrieves recent trade
+information for a specified market on \url{https://bittrex.com}.
 }
 \examples{
 \dontrun{
@@ -31,5 +30,5 @@ head(mh)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DOGE}
+https://bittrex.com/api/v1.1/public/getmarkethistory
 }
