@@ -12,35 +12,33 @@ bt_cancel(uuid)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{always NULL}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{always NULL}
 }
 }
 \description{
-The \code{bt_cancel} function cancels an open order on the
-C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
-is called after providing information to authenticate your account and 
-after an order is placed using either 
-the \code{link{bt_buy}} or \code{link{bt_sell}} functions.
+The \code{bt_cancel()} function cancels an open order on
+\url{https://bittrex.com}. This function
+is called after using either \code{\link[=bt_buy]{bt_buy()}} or \code{\link[=bt_sell]{bt_sell()}}.
 }
 \examples{
 \dontrun{
 # Note you must authenticate and define a uuid first.
-bt_cancel(uuid) 
+bt_cancel(uuid)
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/cancel}
+https://bittrex.com/api/v1.1/account/cancel
 }
 \seealso{
-\code{\link{bt_authenticate}} \code{\link{bt_getopenorders}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}, \code{\link[=bt_getopenorders]{bt_getopenorders()}}
 }

@@ -11,26 +11,25 @@ bt_getorderbook(market, type = c("both", "buy", "sell"), depth = 50)
 
 \item{type}{type of orders to retrieve (default is "both")}
 
-\item{depth}{how deep should the returned order book be (default and 
-maximum are 50). This is the size and price of bids whose price is 
+\item{depth}{how deep the returned order book should be (default and
+maximum are 50). This is the size and price of bids whose price is
 lower than the highest bid and higher than the lowest ask.}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A named list with the buy and sell orders (depending
-   on the specified \code{type} parameter. If \code{type} is "buy" or
-   "both" then the list will contain a element named "buy" with
-   a \code{data.frame} of the buy orders.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A named list with the buy and sell orders (depending
+on the specified \code{type} parameter). If \code{type} is "buy" or
+"both" then the list will contain a element named "buy" with
+a \code{data.frame} of the buy orders.}
 }
 }
 \description{
-The \code{bt_getorderbook} function returns the order book 
-for a specified market on the Bittrex crypto-currency 
-exchange (\url{https://bittrex.com}).
+The \code{bt_getorderbook()} function returns the order book
+for a specified market on \url{https://bittrex.com}.
 }
 \examples{
 \dontrun{
@@ -38,5 +37,5 @@ head(bt_getorderbook("btc-eth")$result)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=both&depth=50}
+https://bittrex.com/api/v1.1/public/getorderbook
 }

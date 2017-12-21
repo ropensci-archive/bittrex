@@ -12,28 +12,26 @@ bt_getticker(market)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A \code{data.frame} with the bid, ask, and last 
-                  trasaction price.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A \code{data.frame} with the bid, ask, and last
+transaction prices.}
 }
 }
 \description{
-The \code{bt_getticker} function returns the bid, ask, and last
-transaction price for a specified market on the Bittrex crypto-currency 
-exchange (\url{https://bittrex.com}). The complete list of 
-markets is available via the \code{\link{bt_getmarkets}} function.
+The \code{bt_getticker()} function returns the bid, ask, and last
+transaction price for a specified market on \url{https://bittrex.com}.
+The complete list of markets is available via \code{\link[=bt_getmarkets]{bt_getmarkets()}}.
 }
 \examples{
 \dontrun{
 getticker("btc-ltc")
-head(markets)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getticker}
+https://bittrex.com/api/v1.1/public/getticker
 }
 \seealso{
-\code{\link{bt_getmarkets}}
+\code{\link[=bt_getmarkets]{bt_getmarkets()}}
 }

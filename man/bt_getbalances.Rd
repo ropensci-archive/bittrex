@@ -9,20 +9,19 @@ bt_getbalances()
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{a \code{data.frame} with the currencies, balances, 
-   available funds, the amount of any pending transactions, and 
-   crypographic addresses that can be used to receive funding.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a \code{data.frame} with the currencies, balances,
+available funds, the amount of any pending transactions, and
+cryptographic addresses that can be used to receive funding.
+}
 }
 }
 \description{
-The \code{bt_getbalances} function retrieves the account balance
-for all currencies on the Bittrex crypto-currency 
-exchange \url{https://bittrex.com}. This function
-can be used after you provide information for authentication.
+The \code{bt_getbalances()} function retrieves the account balance
+for all currencies on \url{https://bittrex.com}. This function
+can only be used after you provide information for authentication.
 }
 \examples{
 \dontrun{
@@ -30,10 +29,10 @@ can be used after you provide information for authentication.
 balances <- bt_getbalances()$result
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #   currency   balance available pending
 # 1      BTC 0.0000000 0.0000000       0
@@ -46,8 +45,8 @@ balances <- bt_getbalances()$result
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getbalances}
+https://bittrex.com/api/v1.1/account/getbalances
 }
 \seealso{
-\code{\link{bt_authenticate}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}
 }

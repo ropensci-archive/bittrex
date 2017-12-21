@@ -7,36 +7,35 @@
 bt_getdeposithistory(currency)
 }
 \arguments{
-\item{currency}{(optional) the currency to retrieve the deposits for. If this
-is not specified then deposit history for all currencies is retrieved.}
+\item{currency}{(optional) the currency to retrieve the deposits for. If
+this is not specified then deposit history for all currencies is retrieved.}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
- \item{result:  }{a \code{data.frame} providing data about 
-   previously completed orders including the order uuid, the currency,
-   the time of the withdraw, the quantity, etc.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a \code{data.frame} providing data about
+previously completed orders including the order uuid, the currency,
+the time of the withdraw, the quantity, etc.
+}
 }
 }
 \description{
-The \code{bt_getdeposithistory} function retrieves the
-deposit history for an account on the Bittrex crypto-currency exchange
-\url{https://bittrex.com}. This function can be used after you 
-provide authentication information.
+The \code{bt_getdeposithistory()} function retrieves the
+deposit history for an account on \url{https://bittrex.com}.
+This function can only be used after you provide authentication information.
 }
 \examples{
 \dontrun{
 bt_getdeposithistory()
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #         id     amount currency confirmations        last_updated
 # 1 20774372 0.39125728      ETH            49 2017-06-22 16:05:50
@@ -50,8 +49,8 @@ bt_getdeposithistory()
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getdeposithistory?apikey=API_KEY?currency=BTC}
+https://bittrex.com/api/v1.1/account/getdeposithistory
 }
 \seealso{
-\code{link{bt_authenticate}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}
 }

@@ -1,3 +1,12 @@
+### 0.1.8
+
+#### BUG FIXES
+* Fixes to documentation.
+
+#### MINOR IMPROVEMENTS
+* Documentation enhancements.
+
+
 # bittrex 0.1.0
 
 * First version of the package including:

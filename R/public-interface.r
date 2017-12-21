@@ -1,17 +1,15 @@
 #' @title Available Markets and Other Meta Data
-#' @description The \code{bt_getmarkets} function returns all of the available
-#' markets currently available currently available on the 
-#' Bittrex crypto-currency exchange (\url{https://bittrex.com}) along with
-#' other information including, among other information, when the exchange
-#' was created and the minimum order size.
-#' @references \url{https://bittrex.com/api/v1.1/public/getmarkets}
+#' @description The `bt_getmarkets()` function returns all of the currently
+#'   available markets on \url{https://bittrex.com} along with other information
+#'   including when the exchange was created and the minimum order size.
+#' @references https://bittrex.com/api/v1.1/public/getmarkets
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A \code{data.frame} with the market currencies, 
-#'    base currencies, base currency long name, minimum trade size, maket name,
+#'  \item{result:  }{A `data.frame` with the market currencies,
+#'    base currencies, base currency long name, minimum trade size, market name,
 #'    if the market is active, when the market was created, market notices,
 #'    if the market is sponsored, and the location of the market logo.}
 #' }
@@ -32,24 +30,22 @@ bt_getmarkets <- function() {
 }
 
 #' @title Retrieve all Available Currencies on the Exchange
-#' @description The \code{bt_getcurrencies} function returns the available
-#' currencies on the Bittrex crypto-currency exchange 
-#' (\url{https://bittrex.com}).
-#' @references \url{https://bittrex.com/api/v1.1/public/getcurrencies}
+#' @description The `bt_getcurrencies()` function returns the available
+#' currencies on \url{https://bittrex.com}.
+#' @references https://bittrex.com/api/v1.1/public/getcurrencies
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A \code{data.frame} with the currency ticker, 
+#'  \item{result:  }{A `data.frame` with the currency ticker,
 #'    currency, a minimum confirmation number, the transaction fee, if the
-#'    currency is active, the coin type, the base address, and currency 
+#'    currency is active, the coin type, the base address, and currency
 #'    notices.}
 #' }
 #' @examples
 #' \dontrun{
 #' currencies <- bt_getcurrencies()$result
-#' head(markets)
 #' }
 #' @importFrom httr GET content
 #' @export
@@ -63,25 +59,23 @@ bt_getcurrencies <- function() {
 }
 
 #' Get the Ticker Values for a Market
-#' @description The \code{bt_getticker} function returns the bid, ask, and last
-#' transaction price for a specified market on the Bittrex crypto-currency 
-#' exchange (\url{https://bittrex.com}). The complete list of 
-#' markets is available via the \code{\link{bt_getmarkets}} function.
-#' @seealso \code{\link{bt_getmarkets}}
-#' @references \url{https://bittrex.com/api/v1.1/public/getticker}
+#' @description The `bt_getticker()` function returns the bid, ask, and last
+#' transaction price for a specified market on \url{https://bittrex.com}.
+#' The complete list of markets is available via [bt_getmarkets()].
+#' @seealso [bt_getmarkets()]
+#' @references https://bittrex.com/api/v1.1/public/getticker
 #' @param market the market to get the ticker for.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A \code{data.frame} with the bid, ask, and last 
-#'                   trasaction price.}
+#'  \item{result:  }{A `data.frame` with the bid, ask, and last
+#'                   transaction prices.}
 #' }
 #' @examples
 #' \dontrun{
 #' getticker("btc-ltc")
-#' head(markets)
 #' }
 #' @importFrom httr GET content
 #' @export
@@ -96,19 +90,18 @@ bt_getticker <- function(market) {
 }
 
 #' @title Summary of All Active Markets
-#' @description the \code{bt_getmarketsummaries} retrieves a summary of all
-#' active markets on the Bittrex crypto-currency 
-#' exchange (\url{https://bittrex.com}) for the last 24 hours.
-#' @references \url{https://bittrex.com/api/v1.1/public/getmarketsummaries}
+#' @description the `bt_getmarketsummaries()` retrieves a summary of all
+#' active markets on \url{https://bittrex.com} for the last 24 hours.
+#' @references https://bittrex.com/api/v1.1/public/getmarketsummaries
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A \code{data.frame} with one row per market and, for
+#'  \item{result:  }{A `data.frame` with one row per market and, for
 #'                   each market: the market name, the high, the low, the
-#'                   volume, the last trade, the last trade price, the 
-#'                   base currency volume, a time stamp for the last 
+#'                   volume, the last trade, the last trade price, the
+#'                   base currency volume, a time stamp for the last
 #'                   transaction, the current bid, the current ask, the number
 #'                   of open buy orders, the number of open sell orders, the
 #'                   the previous day close, and when the market was created.
@@ -134,10 +127,8 @@ bt_getmarketsummaries <- function() {
 }
 
 #' @title Check the Connection to the Bittrex Exchange
-#' @description The \code{bt_api_check} function checks to see
-#' if you can sucessfully connect to the 
-#' Bittrex crypto-currency exchange 
-#' \url{https://bittrex.com}. 
+#' @description The `bt_api_check()` function checks to see
+#' if you can successfully connect to \url{https://bittrex.com}.
 #' @param warn if the request is not successful, should a warning be provided
 #' with the status code.
 #' @return A named logical indicating if you can connect to the exchange
@@ -158,20 +149,19 @@ bt_api_check <- function(warn=TRUE) {
 }
 
 #' @title Summary of a Markets
-#' @description the \code{bt_getmarketsummary} retrieves a summary for a specified
-#' markets on the Bittrex crypto-currency 
-#' exchange (\url{https://bittrex.com}).
-#' @references \url{https://bittrex.com/api/v1.1/public/getmarketsummary}
+#' @description the `bt_getmarketsummary()` retrieves a summary for a specified
+#' market on \url{https://bittrex.com}.
+#' @references https://bittrex.com/api/v1.1/public/getmarketsummary
 #' @param market the market to retrieve the summary for.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A \code{data.frame} with one row and columns corresponding
+#'  \item{result:  }{A `data.frame` with one row and columns corresponding
 #'                   to: the market name, the high, the low, the
-#'                   volume, the last trade, the last trade price, the 
-#'                   base currency volume, a time stamp for the last 
+#'                   volume, the last trade, the last trade price, the
+#'                   base currency volume, a time stamp for the last
 #'                   transaction, the current bid, the current ask, the number
 #'                   of open buy orders, the number of open sell orders, the
 #'                   the previous day close, and when the market was created.
@@ -197,24 +187,23 @@ bt_getmarketsummary <- function(market) {
 }
 
 #' @title Order Book for a Market
-#' @description The \code{bt_getorderbook} function returns the order book 
-#' for a specified market on the Bittrex crypto-currency 
-#' exchange (\url{https://bittrex.com}).
-#' @references \url{https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-LTC&type=both&depth=50}
+#' @description The `bt_getorderbook()` function returns the order book
+#' for a specified market on \url{https://bittrex.com}.
+#' @references https://bittrex.com/api/v1.1/public/getorderbook
 #' @param market the market from which the order book will be retrieved.
 #' @param type type of orders to retrieve (default is "both")
-#' @param depth how deep should the returned order book be (default and 
-#' maximum are 50). This is the size and price of bids whose price is 
-#' lower than the highest bid and higher than the lowest ask.
+#' @param depth how deep the returned order book should be (default and
+#'   maximum are 50). This is the size and price of bids whose price is
+#'   lower than the highest bid and higher than the lowest ask.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
 #'  \item{result:  }{A named list with the buy and sell orders (depending
-#'    on the specified \code{type} parameter. If \code{type} is "buy" or
+#'    on the specified `type` parameter). If `type` is "buy" or
 #'    "both" then the list will contain a element named "buy" with
-#'    a \code{data.frame} of the buy orders.}
+#'    a `data.frame` of the buy orders.}
 #' }
 #' @examples
 #' \dontrun{
@@ -223,7 +212,7 @@ bt_getmarketsummary <- function(market) {
 #' @importFrom httr GET content
 #' @export
 bt_getorderbook <- function(market, type=c("both", "buy", "sell"), depth=50) {
-  resp <- content(GET(paste(public_url, 
+  resp <- content(GET(paste(public_url,
     paste0("getorderbook?market=", market, "&type=", type[1], "&depth=", depth),
     sep="/")), type="application/json")
   if (resp$success) {
@@ -249,17 +238,16 @@ bt_getorderbook <- function(market, type=c("both", "buy", "sell"), depth=50) {
 }
 
 #' @title Recent History for a Market
-#' @description the \code{bt_getmarkethistory} function retrieves recent trade
-#' information for a specified market on the Bittrex crypto-currency exchange 
-#' (\url{https://bittrex.com}).
-#' @references \url{https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DOGE}
+#' @description the `bt_getmarkethistory()` function retrieves recent trade
+#' information for a specified market on \url{https://bittrex.com}.
+#' @references https://bittrex.com/api/v1.1/public/getmarkethistory
 #' @param market the market from which history data will be retrieved.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
 #'                   successful, otherwise and empty string.}
-#'  \item{result:  }{A code{data.frame} containing recent trade information
+#'  \item{result:  }{A `data.frame` containing recent trade information
 #'    including the order type, time, quantity, price, and fill type.}
 #' }
 #' @examples
@@ -270,7 +258,7 @@ bt_getorderbook <- function(market, type=c("both", "buy", "sell"), depth=50) {
 #' @importFrom httr GET content
 #' @export
 bt_getmarkethistory <- function(market) {
-  resp <- content(GET(paste(public_url, 
+  resp <- content(GET(paste(public_url,
     paste0("getmarkethistory?market=", market), sep="/")),
     type="application/json")
   if (resp$succes) {

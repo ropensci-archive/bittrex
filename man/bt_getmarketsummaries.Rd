@@ -9,23 +9,22 @@ bt_getmarketsummaries()
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A \code{data.frame} with one row per market and, for
-                  each market: the market name, the high, the low, the
-                  volume, the last trade, the last trade price, the 
-                  base currency volume, a time stamp for the last 
-                  transaction, the current bid, the current ask, the number
-                  of open buy orders, the number of open sell orders, the
-                  the previous day close, and when the market was created.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A \code{data.frame} with one row per market and, for
+each market: the market name, the high, the low, the
+volume, the last trade, the last trade price, the
+base currency volume, a time stamp for the last
+transaction, the current bid, the current ask, the number
+of open buy orders, the number of open sell orders, the
+the previous day close, and when the market was created.
+}
 }
 }
 \description{
-the \code{bt_getmarketsummaries} retrieves a summary of all
-active markets on the Bittrex crypto-currency 
-exchange (\url{https://bittrex.com}) for the last 24 hours.
+the \code{bt_getmarketsummaries()} retrieves a summary of all
+active markets on \url{https://bittrex.com} for the last 24 hours.
 }
 \examples{
 \dontrun{
@@ -34,5 +33,5 @@ head(ms)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getmarketsummaries}
+https://bittrex.com/api/v1.1/public/getmarketsummaries
 }
