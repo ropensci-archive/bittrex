@@ -7,27 +7,26 @@
 bt_getopenorders(market)
 }
 \arguments{
-\item{market}{(optional) the market on which you would like to see all 
+\item{market}{(optional) the market on which you would like to see all
 open orders. If not specified, then all open orders
 for all markets are returned.}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{a \code{data.frame} providing information about the 
-   open orders including (but not limited to) the market, quantity remaining
-   in the order, the type of order, and when the order was opened.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a \code{data.frame} providing information about the
+open orders including (but not limited to) the market, quantity remaining
+in the order, the type of order, and when the order was opened.
+}
 }
 }
 \description{
-The \code{bt_getopenorders} function retrieves all open orders
-on the Bittrex crypto-currency 
-exchange \url{https://bittrex.com}. This function
-can be used after you provide information for authentication.
+The \code{bt_getopenorders()} function retrieves all the user's open
+orders on \url{https://bittrex.com}. This function can only be used after
+you provide information for authentication.
 }
 \examples{
 \dontrun{
@@ -35,10 +34,10 @@ can be used after you provide information for authentication.
 bt_getopenorders()
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #   uuid                           order_uuid exchange order_type quantity
 # 1   NA 2d6169e9-17fb-4f2a-8aff-37418b515624  ETH-LTC  LIMIT_BUY        1
@@ -51,8 +50,8 @@ bt_getopenorders()
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/market/getopenorders}
+https://bittrex.com/api/v1.1/market/getopenorders
 }
 \seealso{
-\code{\link{bt_authenticate}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}
 }

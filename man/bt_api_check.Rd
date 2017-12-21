@@ -15,10 +15,8 @@ A named logical indicating if you can connect to the exchange
 through the public interface.
 }
 \description{
-The \code{bt_api_check} function checks to see
-if you can sucessfully connect to the 
-Bittrex crypto-currency exchange 
-\url{https://bittrex.com}.
+The \code{bt_api_check()} function checks to see
+if you can successfully connect to \url{https://bittrex.com}.
 }
 \examples{
 \dontrun{

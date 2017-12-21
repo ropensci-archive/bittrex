@@ -12,20 +12,19 @@ bt_getorder(uuid)
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
- \item{result:  }{a \code{data.frame} providing information about the 
-   open order including (but not limited to) the market, quantity remaining
-   in the order, the type of order, and when the order was opened.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a \code{data.frame} providing information about the
+open order including (but not limited to) the market, quantity remaining
+in the order, the type of order, and when the order was opened.
+}
 }
 }
 \description{
-The \code{bt_getorder} function retrieves open order data 
-on the Bittrex crypto-currency 
-exchange \url{https://bittrex}. This function
-can be used after you provide information for authentication.
+The \code{bt_getorder()} function retrieves open order data
+on \url{https://bittrex.com}. This function can only be used after you provide
+information for authentication.
 }
 \examples{
 \dontrun{
@@ -33,10 +32,10 @@ can be used after you provide information for authentication.
 bt_getorder(uuid)
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #   account_id                           order_uuid exchange      type quantity
 # 1         NA 63181c27-dd14-476e-960c-1bd8366bb312  ETH-LTC LIMIT_BUY        1
@@ -53,8 +52,8 @@ bt_getorder(uuid)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getorder&apikey=API_KEY&uuid=0cb4c4e4-bdc7-4e13-8c13-430e587d2cc1}
+https://bittrex.com/api/v1.1/account/getorder
 }
 \seealso{
-\code{\link{bt_authenticate}} \code{\link{bt_getopenorders}}.
+\code{\link[=bt_authenticate]{bt_authenticate()}}, \code{\link[=bt_getopenorders]{bt_getopenorders()}}
 }

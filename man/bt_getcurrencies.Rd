@@ -9,26 +9,24 @@ bt_getcurrencies()
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string.}
- \item{result:  }{A \code{data.frame} with the currency ticker, 
-   currency, a minimum confirmation number, the transaction fee, if the
-   currency is active, the coin type, the base address, and currency 
-   notices.}
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise and empty string.}
+\item{result:  }{A \code{data.frame} with the currency ticker,
+currency, a minimum confirmation number, the transaction fee, if the
+currency is active, the coin type, the base address, and currency
+notices.}
 }
 }
 \description{
-The \code{bt_getcurrencies} function returns the available
-currencies on the Bittrex crypto-currency exchange 
-(\url{https://bittrex.com}).
+The \code{bt_getcurrencies()} function returns the available
+currencies on \url{https://bittrex.com}.
 }
 \examples{
 \dontrun{
 currencies <- bt_getcurrencies()$result
-head(markets)
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/public/getcurrencies}
+https://bittrex.com/api/v1.1/public/getcurrencies
 }

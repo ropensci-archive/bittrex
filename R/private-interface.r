@@ -8,10 +8,9 @@ priv_req <- function(req) {
 }
 
 #' @title Provide User Authentication Data
-#' @description The \code{bt_authenicate} function sets the 
+#' @description The `bt_authenicate()` function sets the
 #' BITTREX_API_KEY and BITTREX_SECRET_KEY environment variables in your current
-#' session to access your account information on the Bittrex crypto-currency
-#' exchange (\url{https://bittrex.com}).
+#' session to access your account on \url{https://bittrex.com}.
 #' @param api_key the api key provided by the exchange
 #' @param secret_key the secret key provided by the exchange
 #' @export
@@ -22,46 +21,49 @@ bt_authenticate <- function(api_key, secret_key) {
 }
 
 #' @title Place a Buy Limit Order
-#' @description The \code{bt_buy} function places a buy order onto the 
-#' Bittrex crypto-currency exchange \url{https://bittrex.com}. This function
-#' only works after you have set up authentication.
+#' @description The `bt_buy()` function places a buy order on
+#'   \url{https://bittrex.com}. This function only works after you have set up
+#'   authentication.
 #'
-#' NOTE: market orders are disabled as of July 7, 2017.
-#' @seealso \code{\link{bt_authenticate}} \code{\link{bt_sell}}
-#' \code{\link{bt_getorder}} \code{\link{bt_getopenorders}} 
-#' \code{\link{bt_getorderhistory}}
-#' @references \url{https://bittrex.com/api/v1.1/market/buylimit}
+#' @seealso [bt_authenticate()], [bt_sell()], [bt_getorder()],
+#'   [bt_getopenorders()], [bt_getorderhistory()]
+#' @references https://bittrex.com/api/v1.1/market/buylimit
 #' @param market the market to place the buy limit order on.
-#' @param quantity how much of the quote currency you want. 
-#' @param rate how much the quote currency for will be bought for.
-#' @param type either "market" or "limit". Note that market orders are 
+#' @param quantity how much of the quote currency you want to buy.
+#' @param rate the price per unit of the quote currency that you wish to buy at.
+#' @param type either "market" or "limit". Note that market orders are
 #' disabled as of July 7, 2017. (default is "limit")
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a named list, with element "uuid" whose element is an 
+#'  \item{success: }{a boolean indicating whether the request is successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a named list, with element "uuid" whose element is an
 #'    integer identifying the order. This value is used to query the status of
-#'    of the order with either the \code{link{getorder}} or 
-#'    \code{link{bt_getopenorders}} function. When the order is fulfilled it
-#'    appears in the order history \code{data.frame} returned by the
-#'    \code{link{getorderhistory}} function.}
+#'    of the order with either the [bt_getorder()] or [bt_getopenorders()]
+#'    function. When the order is fulfilled it appears in the order history
+#'    `data.frame` returned by the [bt_getorderhistory()] function.}
 #' }
 #' @examples
 #' \dontrun{
-#' # Note you must authenticate first. 
-#' # Buy one Litecoin for 0.0001 Ethereum.
-#' bt_buy("eth-ltc", 1, 0.001)
+#' # Note you must authenticate first.
+#' # Buy half a bitcoin at 17000 USDT per bitcoin.
+#' bt_buy("usdt-btc", 0.5, 17000)
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' # $result$uuid
 #' # [1] "2d6169e9-17fb-4f2a-8aff-37418b515624"
+#'
+#' # Buy 3.4 ETH at 0.063 BTC per ETH
+#' bt_buy("btc-eth", 3.4, 0.063)
+#'
+#' # Buy 2 LTC at 255 USDT per LTC
+#' bt_buy("usdt-ltc", 2, 255)
 #' }
 #' @export
 bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
@@ -70,14 +72,14 @@ bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
     if (!missing(rate)) {
       warning("Rate parameter is ignored for market orders.")
     }
-    req <- paste(req, 
+    req <- paste(req,
       paste0("buymarket?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity), sep="/")
   } else if (type[1] == "limit") {
     if (missing(rate)) {
       stop("Rate must be specified for limit orders.")
     }
-    req <- paste(req, 
+    req <- paste(req,
       paste0("buylimit?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity,
              "&rate=", rate), sep="/")
@@ -88,46 +90,50 @@ bt_buy <- function(market, quantity, rate, type=c("limit", "market")) {
 }
 
 #' @title Place a Sell Order
-#' @description The \code{bt_sell} function places a sell order onto the 
-#' bittrex crypto-currency exchange \url{https://bittrex.com}. This function
-#' only works if you have set up authentication. 
-#' 
-#' NOTE: market orders are disabled as of July 7, 2017.
-#' @seealso \code{link{bt_authenticate}} \code{\link{bt_buy}}
-#' \code{\link{bt_getopenorders}} \code{\link{bt_getorderhistory}}
-#' @references \url{https://bittrex.com/api/v1.1/market/selllimit}
+#' @description The `bt_sell()` function places a sell order on
+#'   \url{https://bittrex.com}. This function only works if you have set up
+#'   authentication.
+#'
+#' @seealso [bt_authenticate()], [bt_buy()], [bt_getopenorders()],
+#'   [bt_getorderhistory()]
+#' @references https://bittrex.com/api/v1.1/market/selllimit
 #' @param market the market to place the buy limit order on.
-#' @param quantity how much of the base currency to sell.
-#' @param rate how much you'll sell the base currency quantity for.
-#' @param type either "market" or "limit". Note that market orders are 
-#' disabled as of July 7, 2017. (default is limit)
+#' @param quantity how much of the quote currency to sell.
+#' @param rate the price per unit of the quote currency that you wish to sell
+#'   at.
+#' @param type either `"market"` or `"limit"`. Note that market orders are
+#'   disabled as of July 7, 2017 (default is limit).
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a named list, called "uuid" whose element is an integer
-#'    identifying the order. This value is used to query the status of
-#'    of the order with either the \code{link{bt_getorder}} or 
-#'    \code{link{bt_getopenorders}} function. When the order is fulfilled it
-#'    appears in the order history \code{data.frame} returned by the
-#'    \code{link{bt_getorderhistory}} function.
-#'  }
+#' \item{success: }{a boolean indicating whether the request is successful.}
+#' \item{message: }{a string describing the error if the request was not
+#'   successful, otherwise an empty string.}
+#' \item{result: }{a named list, called "uuid" whose element is an integer
+#'   identifying the order. This value is used to query the status of of the
+#'   order with either the [bt_getorder()] or [bt_getopenorders()] function.
+#'   When the order is fulfilled it appears in the order history `data.frame`
+#'   returned by the [bt_getorderhistory()] function. }
 #' }
 #' @examples
 #' \dontrun{
 #' # Note you must authenticate first.
-#' # Sell 1 Ethereum for one tenth of one Bitcoin. 
-#' bt_sell("btc-eth", 0.1, 1)
+#' # Sell half a bitcoin at 17000 USDT per bitcoin.
+#' bt_sell("usdt-btc", 0.5, 17000)
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' # $result$uuid
 #' # [1] "2d6l69e9-17fb-4f2a-8aff-37418b515624"
+#'
+#' # Sell 3.4 ETH at 0.063 BTC per ETH
+#' bt_sell("btc-eth", 3.4, 0.063)
+#'
+#' # Sell 2 LTC at 255 USDT per LTC
+#' bt_sell("usdt-ltc", 2, 255)
 #' }
 #' @export
 bt_sell <- function(market, quantity, rate, type=c("limit", "market")) {
@@ -136,14 +142,14 @@ bt_sell <- function(market, quantity, rate, type=c("limit", "market")) {
     if (!missing(rate)) {
       warning("Rate parameter is ignored for market orders.")
     }
-    req <- paste(req, 
+    req <- paste(req,
       paste0("sellmarket?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity), sep="/")
   } else if (type[1] == "limit") {
     if (missing(rate)) {
       stop("Rate must be specified for limit orders.")
     }
-    req <- paste(req, 
+    req <- paste(req,
       paste0("selllimit?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market, "&quantity=", quantity,
              "&rate=", rate), sep="/")
@@ -154,57 +160,54 @@ bt_sell <- function(market, quantity, rate, type=c("limit", "market")) {
 }
 
 #' @title Cancel an Open Order
-#' @description The \code{bt_cancel} function cancels an open order on the
-#' C-Cex crypto-currency exchange \url{https://bittrex.com}. This function
-#' is called after providing information to authenticate your account and 
-#' after an order is placed using either 
-#' the \code{link{bt_buy}} or \code{link{bt_sell}} functions.
-#' @seealso \code{\link{bt_authenticate}} \code{\link{bt_getopenorders}}
-#' @references \url{https://bittrex.com/api/v1.1/account/cancel}
+#' @description The `bt_cancel()` function cancels an open order on
+#' \url{https://bittrex.com}. This function
+#' is called after using either [bt_buy()] or [bt_sell()].
+#' @seealso [bt_authenticate()], [bt_getopenorders()]
+#' @references https://bittrex.com/api/v1.1/account/cancel
 #' @param uuid the uuid of the order you would like to cancel.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
 #'  \item{result:  }{always NULL}
 #' }
 #' @examples
 #' \dontrun{
 #' # Note you must authenticate and define a uuid first.
-#' bt_cancel(uuid) 
+#' bt_cancel(uuid)
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' }
 #' @export
 bt_cancel <- function(uuid) {
-  req <- paste(market_url, 
+  req <- paste(market_url,
     paste0("cancel?apikey=", Sys.getenv("BITTREX_API_KEY"),
            "&uuid=", uuid), sep="/")
   priv_req(req)
 }
 
 #' @title Order Data for all Open Orders
-#' @description The \code{bt_getopenorders} function retrieves all open orders
-#' on the Bittrex crypto-currency 
-#' exchange \url{https://bittrex.com}. This function
-#' can be used after you provide information for authentication.
-#' @seealso \code{\link{bt_authenticate}} 
-#' @references \url{https://bittrex.com/api/v1.1/market/getopenorders}
-#' @param market (optional) the market on which you would like to see all 
+#' @description The `bt_getopenorders()` function retrieves all the user's open
+#'   orders on \url{https://bittrex.com}. This function can only be used after
+#'   you provide information for authentication.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/market/getopenorders
+#' @param market (optional) the market on which you would like to see all
 #' open orders. If not specified, then all open orders
 #' for all markets are returned.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a \code{data.frame} providing information about the 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` providing information about the
 #'    open orders including (but not limited to) the market, quantity remaining
 #'    in the order, the type of order, and when the order was opened.
 #'  }
@@ -215,10 +218,10 @@ bt_cancel <- function(uuid) {
 #' bt_getopenorders()
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #   uuid                           order_uuid exchange order_type quantity
 #' # 1   NA 2d6169e9-17fb-4f2a-8aff-37418b515624  ETH-LTC  LIMIT_BUY        1
@@ -232,10 +235,10 @@ bt_cancel <- function(uuid) {
 #' @export
 bt_getopenorders <- function(market) {
   if (missing(market)) {
-    req <- paste(market_url, 
+    req <- paste(market_url,
       paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY")), sep="/")
   } else {
-    req <- paste(market_url, 
+    req <- paste(market_url,
       paste0("getopenorders?apikey=", Sys.getenv("BITTREX_API_KEY"),
              "&market=", market), sep="/")
   }
@@ -243,7 +246,7 @@ bt_getopenorders <- function(market) {
   if ( (ret$success == TRUE) && (length(ret$result) > 0)) {
     ret$result <- result_to_df(ret$result)
   } else if (ret$success == TRUE) {
-    ret$result <- data.frame(uuid=character(), order_uuid=character(), 
+    ret$result <- data.frame(uuid=character(), order_uuid=character(),
       exchange=character(), order_type=character(), quantity=numeric(),
       quantity_remaining=numeric(), limit=numeric(),
       commission_paid=numeric(),
@@ -258,20 +261,19 @@ bt_getopenorders <- function(market) {
 }
 
 #' Account Balances for All Currencies
-#' @description The \code{bt_getbalances} function retrieves the account balance
-#' for all currencies on the Bittrex crypto-currency 
-#' exchange \url{https://bittrex.com}. This function
-#' can be used after you provide information for authentication.
-#' @seealso \code{\link{bt_authenticate}}
-#' @references \url{https://bittrex.com/api/v1.1/account/getbalances}
+#' @description The `bt_getbalances()` function retrieves the account balance
+#' for all currencies on \url{https://bittrex.com}. This function
+#' can only be used after you provide information for authentication.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/account/getbalances
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a \code{data.frame} with the currencies, balances, 
-#'    available funds, the amount of any pending transactions, and 
-#'    crypographic addresses that can be used to receive funding.
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` with the currencies, balances,
+#'    available funds, the amount of any pending transactions, and
+#'    cryptographic addresses that can be used to receive funding.
 #'  }
 #' }
 #' @examples
@@ -280,10 +282,10 @@ bt_getopenorders <- function(market) {
 #' balances <- bt_getbalances()$result
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #   currency   balance available pending
 #' # 1      BTC 0.0000000 0.0000000       0
@@ -305,7 +307,7 @@ bt_getbalances <- function() {
     } else if (length(ret$result) > 1) {
       ret$result <- result_to_df(ret$result)
     } else { # length(ret$result) == 0
-      ret$result <- data.frame(currency=character(), balance=numeric(), 
+      ret$result <- data.frame(currency=character(), balance=numeric(),
         available=numeric(), pending=numeric(), crypt_address=character())
     }
   }
@@ -313,21 +315,20 @@ bt_getbalances <- function() {
 }
 
 #' Account Balance for a Specified Currency
-#' @description The \code{bt_getbalance} function retrieves the account balance
-#' for a specified currency on the Bittrex crypto-currency 
-#' exchange \url{https://bittrex.com}. This function
-#' can be used after you provide information for authentication.
-#' @seealso \code{\link{bt_authenticate}}
-#' @references \url{https://bittrex.com/api/v1.1/account/getbalances}
+#' @description The `bt_getbalance()` function retrieves the account balance
+#' for a specified currency on \url{https://bittrex.com}. This function
+#' can only be used after you provide information for authentication.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/account/getbalances
 #' @param currency currency to retrieve the account balance for.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a \code{data.frame} with the currency, balance, 
-#'    available funds, the amount of any pending transactions, and 
-#'    crypographic addresses that can be used to receive funding.
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` with the currency, balance,
+#'    available funds, the amount of any pending transactions, and
+#'    cryptographic addresses that can be used to receive funding.
 #'  }
 #' }
 #' @examples
@@ -341,7 +342,7 @@ bt_getbalances <- function() {
 #' @export
 bt_getbalance <- function(currency) {
   req <- paste(account_url,
-    paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"), 
+    paste0("getbalance?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency), sep="/")
   resp <- priv_req(req)
   if (resp$success && is.null(resp$result$CryptoAddress)) {
@@ -357,18 +358,18 @@ bt_getbalance <- function(currency) {
 }
 
 #' @title Retrieve the Address for a Specified Currency
-#' @description The \code{bt_getdepositaddress} retrieves or creates the account 
+#' @description The `bt_getdepositaddress()` retrieves or creates the account
 #' deposit address for a specified currency.
-#' @references \url{https://bittrex.com/api/v1.1/account/getdepositaddress?apikey=API_KEY&currency=VTC}
+#' @references https://bittrex.com/api/v1.1/account/getdepositaddress
 #' @param currency currency to get the deposit address
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string. If an 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string. If an
 #'                   address has not been generated this field will have value
 #'                   "ADDRESS_GENERATING" until it is available.}
-#'  \item{result:  }{a \code{data.frame} with the one row and columns 
+#'  \item{result:  }{a `data.frame` with the one row and columns
 #'                   providing the currency and the address.}
 #' }
 #' @examples
@@ -377,10 +378,10 @@ bt_getbalance <- function(currency) {
 #' bt_getdepositaddress("btc")
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #   currency                            address
 #' # 1      BTC 1Q6WissSMNF7NCNw3sDXQ2F7AbrSCYouj2
@@ -393,30 +394,30 @@ bt_getdepositaddress <- function(currency) {
   ret <- priv_req(req)
 
   # If the enpoint is queried and an address does not exist, one is generated.
-  if (ret$message == "ADDRESS_GENERATING") 
+  if (ret$message == "ADDRESS_GENERATING")
     ret <- bt_getdepositaddress(currency)
   if (ret$success) {
-    ret$result <- as_data_frame(ret$result)    
+    ret$result <- as_data_frame(ret$result)
   }
   ret
 }
 
 #' @title Withdraw Funds from an Account
-#' @description The \code{bt_withdraw} function moves funds from a 
-#' Bittrex (\url{https://bittrex.com} account to a specified address.
-#' It does not include the transaction fee.
-#' @seealso \code{link{currency}}
-#' @references \url{https://bittrex.com/api/v1.1/account/withdraw}
+#' @description The `bt_withdraw()` function moves funds from a
+#'   \url{https://bittrex.com} account to a specified address. It does not
+#'   include the transaction fee.
+#' @seealso [bt_getbalance()], [bt_getbalances()]
+#' @references https://bittrex.com/api/v1.1/account/withdraw
 #' @param currency the currency to withdraw.
 #' @param quantity the quantity of the currency to withdraw.
 #' @param address where to send the funds.
 #' @param paymentid CryptoNotes/BitShareX/Nxt optional field (memo/paymentid).
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string.}
-#'  \item{result:  }{a named list, with element "uuid" whose element is an 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a named list, with element "uuid" whose element is an
 #'    integer identifying the order.}
 #'  }
 #' @examples
@@ -427,7 +428,7 @@ bt_getdepositaddress <- function(currency) {
 #' }
 #' @export
 bt_withdraw <- function(currency, quantity, address, paymentid) {
-  req <- paste(account_url, 
+  req <- paste(account_url,
     paste0("withdraw?apikey=", Sys.getenv("BITTREX_API_KEY"),
       "&currency=", currency, "&quantity=", quantity, "&address=", address),
       sep="/")
@@ -438,19 +439,18 @@ bt_withdraw <- function(currency, quantity, address, paymentid) {
 }
 
 #' @title Order Data for a Specified Order
-#' @description The \code{bt_getorder} function retrieves open order data 
-#' on the Bittrex crypto-currency 
-#' exchange \url{https://bittrex}. This function
-#' can be used after you provide information for authentication.
-#' @seealso \code{\link{bt_authenticate}} \code{\link{bt_getopenorders}}.
-#' @references \url{https://bittrex.com/api/v1.1/account/getorder&apikey=API_KEY&uuid=0cb4c4e4-bdc7-4e13-8c13-430e587d2cc1}
+#' @description The `bt_getorder()` function retrieves open order data
+#'   on \url{https://bittrex.com}. This function can only be used after you provide
+#'   information for authentication.
+#' @seealso [bt_authenticate()], [bt_getopenorders()]
+#' @references https://bittrex.com/api/v1.1/account/getorder
 #' @param uuid the uuid of the order.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string."}
-#'  \item{result:  }{a \code{data.frame} providing information about the 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` providing information about the
 #'    open order including (but not limited to) the market, quantity remaining
 #'    in the order, the type of order, and when the order was opened.
 #'  }
@@ -461,10 +461,10 @@ bt_withdraw <- function(currency, quantity, address, paymentid) {
 #' bt_getorder(uuid)
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #   account_id                           order_uuid exchange      type quantity
 #' # 1         NA 63181c27-dd14-476e-960c-1bd8366bb312  ETH-LTC LIMIT_BUY        1
@@ -481,19 +481,19 @@ bt_withdraw <- function(currency, quantity, address, paymentid) {
 #' }
 #' @export
 bt_getorder <- function(uuid) {
-  req <- paste(account_url, paste0("getorder?apikey=", 
+  req <- paste(account_url, paste0("getorder?apikey=",
     Sys.getenv("BITTREX_API_KEY"), "&uuid=", uuid), sep="/")
   resp <- priv_req(req)
-  ret <- data.frame(account_id=character(), order_uuid=character(), 
+  ret <- data.frame(account_id=character(), order_uuid=character(),
     exchange=character(), type=character(),
-    quantity=numeric(), quantity_remaining=numeric(), limit=numeric(), 
-    reserved=numeric(), reserve_remaining=numeric(), 
-    commission_reserved=numeric(), 
-    commission_reserve_remaining=numeric(), commission_paid=numeric(), 
-    price=numeric(), price_per_unit=numeric(), 
-    opened=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")), 
+    quantity=numeric(), quantity_remaining=numeric(), limit=numeric(),
+    reserved=numeric(), reserve_remaining=numeric(),
+    commission_reserved=numeric(),
+    commission_reserve_remaining=numeric(), commission_paid=numeric(),
+    price=numeric(), price_per_unit=numeric(),
+    opened=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
     closed=as.POSIXct(strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
-    is_open=logical(), sentinel=character(), cancel_initiated=logical(), 
+    is_open=logical(), sentinel=character(), cancel_initiated=logical(),
     immediate_or_cancel=logical(), is_conditional=logical(),
     condition=character(), condition_target=character())
   if (length(resp$result) > 0) {
@@ -510,20 +510,20 @@ bt_getorder <- function(uuid) {
 }
 
 #' @title Order History for an Account
-#' @description The \code{bt_getorderhistory} function retrieves order history
-#' data on the Bittrex crypto-currency exchange \url{https://bittrex.com}. This 
-#' function can be used after you provide authentication information.
-#' @seealso \code{\link{bt_authenticate}}
-#' @references \url{https://bittrex.com/api/v1.1/account/getorderhistory}
-#' @param market (optional) the market on which you would like to see all 
-#' open orders. If not specified, then completed orders for all markets are 
+#' @description The `bt_getorderhistory()` function retrieves order history
+#' data on \url{https://bittrex.com}.
+#' This function can only be used after you provide authentication information.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/account/getorderhistory
+#' @param market (optional) the market on which you would like to see all
+#' open orders. If not specified, then completed orders for all markets are
 #' returned.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string."}
-#'  \item{result:  }{a \code{data.frame} providing data about 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` providing data about
 #'    previously completed orders including the order uuid, the exchange
 #'    the time of the order, the order type, the limit, the quantity, the
 #'    quantity remaining, the commission, the price, the price per unit,
@@ -535,10 +535,10 @@ bt_getorder <- function(uuid) {
 #' bt_getorderhistory()
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #                             order_uuid exchange time_stamp order_type   limit
 #' # 1 c04bc07b-e6a9-4f47-a2c8-f9eb3c9a7fa1  BTC-ETH       <NA> LIMIT_SELL 0.11771
@@ -567,7 +567,7 @@ bt_getorderhistory <- function(market) {
   resp <- priv_req(req)
   ret <- data.frame(order_uuid=character(), exchange=character(),
     time_stamp=as.POSIXct(strptime(character(),"%Y-%m-%d %H:%M:%OS", tz="GMT")),
-    order_type=character(), limit=numeric(), quantity=numeric(), 
+    order_type=character(), limit=numeric(), quantity=numeric(),
     quantity_remaining=numeric(), commission=numeric(), price=numeric(),
     price_per_unit=numeric(), is_conditional=logical(),
     condition=character(), condition_target=character(),
@@ -591,23 +591,23 @@ bt_getorderhistory <- function(market) {
 }
 
 #' @title Retrieve Withdrawal History
-#' @description The \code{bt_getwithdrawalhistory} function retrieves the
-#' withdraw history for an account on the Bittrex crypto-currency exchange
-#' \url{https://bittrex.com}. This function can be used after you 
-#' provide authentication information.
-#' @seealso \code{link{bt_authenticate}}
-#' @references \url{https://bittrex.com/api/v1.1/account/getwithdrawalhistory?apikey=API_KEY?currency=BTC}
-#' @param currency (optional) the currency to retrieve the withdraw for. If this
-#' is not specified then withdraw history for all currencies is retrieved.
+#' @description The `bt_getwithdrawalhistory()` function retrieves the
+#' withdraw history for an account on \url{https://bittrex.com}. This function
+#'  can only be used after you provide authentication information.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/account/getwithdrawalhistory
+#' @param currency (optional) the currency to retrieve the withdraw for. If
+#'   this is not specified then withdraw history for all currencies is
+#'   retrieved.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string."}
-#'  \item{result:  }{a \code{data.frame} providing data about 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` providing data about
 #'    previously completed orders including the order uuid, the currency,
 #'    the time of the withdraw, the quantity, etc.
-#'  }
+#'   }
 #' }
 #' @examples
 #' \dontrun{
@@ -615,10 +615,10 @@ bt_getorderhistory <- function(market) {
 #' bt_getwithdrawalhistory()
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #                           payment_uuid currency     amount
 #' # 1 ba0c85de-1fd8-423e-939d-e34d2aad34fd      BTC 0.04597029
@@ -649,8 +649,8 @@ bt_getwithdrawalhistory <- function(currency) {
     req <- paste0(req, "&currency=", currency)
   }
   resp <- priv_req(req)
-  ret <- data.frame(payment_uuid=character(), currency=character(), 
-    amount=numeric(), address=character(), opened=character(), 
+  ret <- data.frame(payment_uuid=character(), currency=character(),
+    amount=numeric(), address=character(), opened=character(),
     authorized=logical(), pending_payment=logical(), tx_cost=numeric(),
     tx_id=character(), canceled=logical(), invalid_address=logical())
   if (length(resp$result) > 0) {
@@ -670,33 +670,32 @@ bt_getwithdrawalhistory <- function(currency) {
 }
 
 #' @title Retrieve Deposit History
-#' @description The \code{bt_getdeposithistory} function retrieves the
-#' deposit history for an account on the Bittrex crypto-currency exchange
-#' \url{https://bittrex.com}. This function can be used after you 
-#' provide authentication information.
-#' @seealso \code{link{bt_authenticate}}
-#' @references \url{https://bittrex.com/api/v1.1/account/getdeposithistory?apikey=API_KEY?currency=BTC}
-#' @param currency (optional) the currency to retrieve the deposits for. If this
-#' is not specified then deposit history for all currencies is retrieved.
+#' @description The `bt_getdeposithistory()` function retrieves the
+#' deposit history for an account on \url{https://bittrex.com}.
+#' This function can only be used after you provide authentication information.
+#' @seealso [bt_authenticate()]
+#' @references https://bittrex.com/api/v1.1/account/getdeposithistory
+#' @param currency (optional) the currency to retrieve the deposits for. If
+#'   this is not specified then deposit history for all currencies is retrieved.
 #' @return A named list with the following elements:
 #' \itemize{
-#'  \item{success: }{a boolean indicating if the request successful?}
-#'  \item{message: }{a string describing the error if the request was not 
-#'                   successful, otherwise and empty string."}
-#'  \item{result:  }{a \code{data.frame} providing data about 
+#'  \item{success: }{a boolean indicating whether the request was successful.}
+#'  \item{message: }{a string describing the error if the request was not
+#'                   successful, otherwise an empty string.}
+#'  \item{result:  }{a `data.frame` providing data about
 #'    previously completed orders including the order uuid, the currency,
 #'    the time of the withdraw, the quantity, etc.
-#'  }
+#'   }
 #' }
 #' @examples
 #' \dontrun{
 #' bt_getdeposithistory()
 #' # $success
 #' # [1] TRUE
-#' # 
+#' #
 #' # $message
 #' # [1] ""
-#' # 
+#' #
 #' # $result
 #' #         id     amount currency confirmations        last_updated
 #' # 1 20774372 0.39125728      ETH            49 2017-06-22 16:05:50
@@ -717,7 +716,7 @@ bt_getdeposithistory <- function(currency) {
   }
   resp <- priv_req(req)
   ret <- data.frame(id=integer(), amount=numeric(), currency=character(),
-    confirmation=integer(), 
+    confirmation=integer(),
     last_updated=as.POSIXct(
       strptime(character(), "%Y-%m-%d %H:%M:%OS", tz="GMT")),
     tx_id=character(), crypto_address=character())

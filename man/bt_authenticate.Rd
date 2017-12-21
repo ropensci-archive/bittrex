@@ -12,8 +12,7 @@ bt_authenticate(api_key, secret_key)
 \item{secret_key}{the secret key provided by the exchange}
 }
 \description{
-The \code{bt_authenicate} function sets the 
+The \code{bt_authenicate()} function sets the
 BITTREX_API_KEY and BITTREX_SECRET_KEY environment variables in your current
-session to access your account information on the Bittrex crypto-currency
-exchange (\url{https://bittrex.com}).
+session to access your account on \url{https://bittrex.com}.
 }

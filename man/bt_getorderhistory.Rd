@@ -7,38 +7,38 @@
 bt_getorderhistory(market)
 }
 \arguments{
-\item{market}{(optional) the market on which you would like to see all 
-open orders. If not specified, then completed orders for all markets are 
+\item{market}{(optional) the market on which you would like to see all
+open orders. If not specified, then completed orders for all markets are
 returned.}
 }
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the request successful?}
- \item{message: }{a string describing the error if the request was not 
-                  successful, otherwise and empty string."}
- \item{result:  }{a \code{data.frame} providing data about 
-   previously completed orders including the order uuid, the exchange
-   the time of the order, the order type, the limit, the quantity, the
-   quantity remaining, the commission, the price, the price per unit,
-   and whether or not it was a conditional trade.
- }
+\item{success: }{a boolean indicating whether the request was successful.}
+\item{message: }{a string describing the error if the request was not
+successful, otherwise an empty string.}
+\item{result:  }{a \code{data.frame} providing data about
+previously completed orders including the order uuid, the exchange
+the time of the order, the order type, the limit, the quantity, the
+quantity remaining, the commission, the price, the price per unit,
+and whether or not it was a conditional trade.
+}
 }
 }
 \description{
-The \code{bt_getorderhistory} function retrieves order history
-data on the Bittrex crypto-currency exchange \url{https://bittrex.com}. This 
-function can be used after you provide authentication information.
+The \code{bt_getorderhistory()} function retrieves order history
+data on \url{https://bittrex.com}.
+This function can only be used after you provide authentication information.
 }
 \examples{
 \dontrun{
 bt_getorderhistory()
 # $success
 # [1] TRUE
-# 
+#
 # $message
 # [1] ""
-# 
+#
 # $result
 #                             order_uuid exchange time_stamp order_type   limit
 # 1 c04bc07b-e6a9-4f47-a2c8-f9eb3c9a7fa1  BTC-ETH       <NA> LIMIT_SELL 0.11771
@@ -59,8 +59,8 @@ bt_getorderhistory()
 }
 }
 \references{
-\url{https://bittrex.com/api/v1.1/account/getorderhistory}
+https://bittrex.com/api/v1.1/account/getorderhistory
 }
 \seealso{
-\code{\link{bt_authenticate}}
+\code{\link[=bt_authenticate]{bt_authenticate()}}
 }
