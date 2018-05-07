@@ -218,13 +218,23 @@ bt_getorderbook <- function(market, type=c("both", "buy", "sell"), depth=50) {
   if (resp$success) {
     if (any(c("both", "buy") %in% names(resp$result))) {
       buy <- Reduce(rbind, Map(as_data_frame, resp$result$buy))
-      names(buy) <- tolower(names(buy))
-      buy$type <- "BUY"
+      if (!is.null(buy)) {
+        names(buy) <- tolower(names(buy))
+        buy$type <- "BUY"
+      } else {
+        buy <- data.frame(quantitiy=numeric(), rate=numeric(), 
+                          type=character())
+      }
     }
     if (any(c("both", "sell") %in% names(resp$result))) {
       sell <- Reduce(rbind, Map(as_data_frame, resp$result$sell))
-      names(sell) <- tolower(names(sell))
-      sell$type <- "SELL"
+      if (!is.null(sell)) {
+        names(sell) <- tolower(names(sell))
+        sell$type <- "SELL"
+      } else {
+        sell <- data.frame(quantitiy=numeric(), rate=numeric(), 
+                           type=character())
+      }
     }
     if (type[1] == "both") {
       resp$result <- rbind(sell, buy)
