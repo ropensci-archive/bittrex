@@ -24,5 +24,5 @@ VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 X-schema.org-keywords: cryptocurrency, cryptocurency-exchange, finance
 X-schema.org-applicationCategory: Data Access
-X-schema.org-isPartOf: "https://ropensci.org"
+X-schema.org-isPartOf: https://ropensci.org
 Roxygen: list(markdown = TRUE)
