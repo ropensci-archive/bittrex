@@ -16,7 +16,7 @@ Authors@R: c(
 	)
 URL: https://github.com/kaneplusplus/bittrex
 BugReports: https://github.com/kaneplusplus/bittrex/issues
-Description: A client for the Bittrex crypto-currency exchange \url{https://bittrex.com/} including the ability to query trade data, manage account balances, and place orders.
+Description: A client for the Bittrex crypto-currency exchange https://bittrex.com including the ability to query trade data, manage account balances, and place orders.
 License: LGPL-2
 Imports: httr, openssl
 Suggests: covr, testthat, knitr, rmarkdown, threejs, tidyverse, igraph, quantmod
