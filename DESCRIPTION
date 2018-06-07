@@ -14,8 +14,8 @@ Authors@R: c(
 		comment = "http://orcid.org/0000-0002-5239-4043"
 		)
 	)
-URL: https://github.com/kaneplusplus/bittrex
-BugReports: https://github.com/kaneplusplus/bittrex/issues
+URL: https://github.com/ropensci/bittrex
+BugReports: https://github.com/ropensci/bittrex/issues
 Description: A client for the Bittrex crypto-currency exchange https://bittrex.com including the ability to query trade data, manage account balances, and place orders.
 License: LGPL-2
 Imports: httr, openssl
