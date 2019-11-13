@@ -1,9 +1,9 @@
-### 0.1.8
+# 0.1.8
 
-#### BUG FIXES
+## BUG FIXES
 * Fixes to documentation.
 
-#### MINOR IMPROVEMENTS
+## MINOR IMPROVEMENTS
 * Documentation enhancements.
 
 
